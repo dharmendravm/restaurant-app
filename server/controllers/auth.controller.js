@@ -1,5 +1,4 @@
-import express from 'express'
 
-import {register} from '../controllers/auth';
+export const register = async (req,res) => {
 
-
+}
