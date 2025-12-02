@@ -6,26 +6,3 @@
  body{
   height: 100%;
  }
-
-.hero-bg {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 237, 213, 0.8) 0%,
-    rgba(255, 247, 237, 0.8) 20%,
-    rgba(240, 253, 244, 0.8) 40%,
-    rgba(255, 228, 230, 0.8) 60%,
-    rgba(255, 241, 242, 0.8) 80%
-  );
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-}
-
-/* Glass card effect */
-.glass-card {
-  /* background: rgba(255, 255, 255, 0.55); */
-  background: transparent ;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-}
