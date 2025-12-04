@@ -1,41 +1,46 @@
 import { json } from "express";
 import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
 import User from "../models/user.js";
-import bcrypt, { hash } from 'bcryptjs';
+import bcrypt, { hash } from "bcryptjs";
 
 // Todo: User Registation Function ....
 
-export const register = async (req,res)=>{
-    const {name, email, phone, password} = req.body;
-    try {
+export const register = async (req, res) => {
+  const { name, email, phone, password } = req.body;
+  try {
+    if (!name || !email || !phone || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing Details!",
+      });
+    }
 
-        if(!name || !email || !phone || !password){
-    return res.status(400).json({
-        success: false , message : 'Missing Details!'})
-    };
+    const user = await User.findOne({ email });
+    if (user) {
+      return res.status(400).json({
+        message: "Account already axists",
+      });
+    }
 
-    const user = await User.findOne({email});
-    if(user){
-        return res.status(400).json({
-            message : 'Account already axists'})
-    };
+    const passwordHash = await bcrypt.hash(password, 12);
 
-    const passwordHash = await bcrypt.hash(password , 12);
+    const data = { name, email, phone, password: passwordHash };
 
-    const data = {name, email, phone, password : passwordHash};
-
-    const newUser = await User.create(data)
+    const newUser = await User.create(data);
     res.status(201).json({
-        success: true, data: newUser, message: 'Account created sucsessfully'});
-
-} catch (error) {
-        console.log(error);
-        res.status(500).json({
-            message:error.message})
-}};
+      success: true,
+      data: newUser,
+      message: "Account created sucsessfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
 
 // Todo : User Login Function
-
 
 // LOGIN
 export const Login = async (req, res) => {
@@ -67,17 +72,21 @@ export const Login = async (req, res) => {
       name: user.name,
       email: user.email,
       role: user.role,
+      id: user._id,
     });
 
     const refreshToken = generateRefreshToken({
       name: user.name,
       email: user.email,
       role: user.role,
+      id: user._id,
     });
-    
+
     user.refreshToken = refreshToken;
-    user.refreshTokenExpiresTime = new Date(Date.now() + 7*24*60*60*1000)
-    user.lastLogin = new Date()
+    user.refreshTokenExpiresTime = new Date(
+      Date.now() + 7 * 24 * 60 * 60 * 1000
+    );
+    user.lastLogin = new Date();
     await user.save();
 
     return res.status(200).json({
@@ -87,8 +96,6 @@ export const Login = async (req, res) => {
       accessToken,
       refreshToken,
     });
-
-
   } catch (error) {
     return res.status(500).json({
       success: false,
