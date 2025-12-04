@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
+import {logAuth} from '../logs/logs.js'
 
 // Verify Access Token
 export const verifyToken = async (req, res, next) => {
@@ -8,15 +9,15 @@ export const verifyToken = async (req, res, next) => {
       const token = req.headers.authorization.split(" ")[1];
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log(decoded);
+      logAuth(decoded);
 
       const userData = await User.findById(decoded.id).select("-password");
 
-      console.log(userData);
+      logAuth(userData);
       req.user = decoded;
       next();
     }
   } catch (error) {
-    console.log(error);
+    logAuth(error);
   }
 };

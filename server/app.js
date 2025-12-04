@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
-import "dotenv/config";
 import ConnectDB from "./config/database.js";
+import { PORT } from "./config.js";
+import { logServer } from './logs/logs.js'
 
 import authRoutes from "./router/auth.route.js";
 import tableRoute from "./router/table.route.js";
@@ -35,9 +36,8 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1", tableRoute);
 app.use("/api/v1", menuRoute);
 
-// Server
-const PORT = process.env.PORT || 5000;
 
+// Server
 app.listen(PORT, () => {
-  console.log(`Server is Running on Port: ${PORT}`);
+  logServer(`Server is Running on Port: ${PORT}`);
 });

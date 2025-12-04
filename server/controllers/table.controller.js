@@ -1,6 +1,5 @@
 import Table from '../models/table.js'
-
-//Pending . . . 
+import { logAuth } from '../logs/logs.js'
 
 
 export const registerTable = async (req, res) => {
@@ -9,10 +8,12 @@ export const registerTable = async (req, res) => {
         
     // qr-Slug
     const qrSlug = crypto.getRandomValues(6).toString('hex')
-    console.log(qrSlug);
+    logAuth(qrSlug)
 
     // qr Code Url
         const qrCodeUrl = (`http://localhost:5173/scanqr/${qrSlug}`)
+
+        
     
     } catch (error) {
         

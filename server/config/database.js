@@ -1,14 +1,15 @@
 import mongoose from "mongoose";
+import { MONGO_URI } from "../config.js";
+import { logDB } from '../logs/logs.js'
 
-
-// Function to Connect to the mongodb database
+// Connect to the mongodb database
 const ConnectDB = async () => {
   try {
-    await mongoose.connect(`${process.env.MONGODB_URI}`)
+    await mongoose.connect(`${MONGO_URI}`)
 
-    console.log("DB connected successfully ");
+    logDB("DB connected successfully ");
   } catch (error) {
-    console.error("DB connection error", error.message);
+    logDB("DB connection error", error.message);
   }
 };
 

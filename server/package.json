@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "server": "nodemon app.js",
+    "server": "set DEBUG=server:* && nodemon app.js",
     "start": "node app.js"
   },
   "keywords": [],
@@ -16,6 +16,7 @@
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "debug": "^4.4.3",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",

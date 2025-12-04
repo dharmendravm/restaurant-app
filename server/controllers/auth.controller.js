@@ -2,8 +2,9 @@ import { json } from "express";
 import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
 import User from "../models/user.js";
 import bcrypt, { hash } from "bcryptjs";
+import { logAuth } from '../logs/logs.js'
 
-// Todo: User Registation Function ....
+// User Registation Function ....
 
 export const register = async (req, res) => {
   const { name, email, phone, password } = req.body;
@@ -33,16 +34,15 @@ export const register = async (req, res) => {
       message: "Account created sucsessfully",
     });
   } catch (error) {
-    console.log(error);
+    logAuth(error)
     res.status(500).json({
       message: error.message,
     });
   }
 };
 
-// Todo : User Login Function
+// User Login Function
 
-// LOGIN
 export const Login = async (req, res) => {
   try {
     const { email, password } = req.body;
