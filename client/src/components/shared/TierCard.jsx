@@ -6,7 +6,6 @@ const borderVariants = {
   Ruby: "hover:border-rose-400",         
   Emerald: "hover:border-green-400",
   Sapphire: "hover:border-blue-500",     
-  White: "hover:border-white",           
 };
 
 

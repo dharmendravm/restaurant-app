@@ -1,14 +1,7 @@
 import { BrandLogo } from "@/components/shared/BrandLogo";
 import { GlowBG } from "@/components/shared/GlowBG";
 import { Card } from "@/components/shared/MemberShipCard";
-import {
-  Award,
-  Gift,
-  LogIn,
-  Sparkles,
-  User,
-  UserPlus,
-} from "lucide-react";
+import { Award, Gift, LogIn, Sparkles, User, UserPlus } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -39,7 +32,6 @@ const Welcome = () => {
 
                 {/* FORM */}
                 <form className="mt-8 space-y-5">
-
                   {/* SUBMIT */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Link

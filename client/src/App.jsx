@@ -1,25 +1,23 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./pages/auth/login/Login";
+
+import Login from "@/pages/auth/login/Login";
 import Register from "@/pages/auth/register/Register";
-// import Navbar from "./components/Navbar";
+
 import Menu from "./pages/Menu";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import HomePage from "./pages/HomePage";
 import Welcome from "./pages/Welcome";
 
-
-const App = () => {
+function App() {
   return (
-    <div className="min-h-screen bg-[#010103]">
-      {/* <Navbar /> */}
+    <div className="bg-[#010103]">
       <Router>
         <Routes>
-
-          {/* Open Routes */}
-          <Route path="/register" element={<Register />} />
-          <Route path="/welcome" element={<Welcome/>}/>
+          {/* Public Routes */}
+          <Route path="/welcome" element={<Welcome />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
           {/*Protected Routes */}
           <Route
@@ -30,12 +28,18 @@ const App = () => {
               </ProtectedRoutes>
             }
           />
-  
-          <Route path="/menu" element={<Menu />} />
+          
+          <Route path="menu" element={
+            <ProtectedRoutes>
+              <Menu/>
+            </ProtectedRoutes>
+          }/>
 
         </Routes>
       </Router>
     </div>
   );
-};
+}
 export default App;
+
+// bg-[#010103]

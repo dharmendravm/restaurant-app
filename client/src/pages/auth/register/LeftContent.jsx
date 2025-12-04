@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { User, Mail, Lock, ArrowRight, GiftIcon, UserPlus, LockKeyhole, TabletSmartphone } from "lucide-react";
+import {
+  User,
+  Mail,
+  Lock,
+  ArrowRight,
+  GiftIcon,
+  UserPlus,
+  LockKeyhole,
+  TabletSmartphone,
+} from "lucide-react";
 import { BrandLogo } from "@/components/shared/BrandLogo";
 import { InputFild } from "@/components/shared/InputFild";
 import { useDispatch } from "react-redux";
-import {register} from '@/redux/authSlice'
+import { register } from "@/redux/authSlice";
 
 const LeftContent = () => {
   const dispatch = useDispatch();
@@ -34,9 +43,11 @@ const LeftContent = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    dispatch(register(formData)).unwrap().then(()=>{
-      navigate('/')
-    })
+    dispatch(register(formData))
+      .unwrap()
+      .then(() => {
+        navigate("/");
+      });
   };
   return (
     <div className="flex flex-col">
