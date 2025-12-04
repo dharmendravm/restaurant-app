@@ -1,17 +1,36 @@
 import { BrandLogo } from "@/components/shared/BrandLogo";
-import { GlowBG } from "@/components/shared/GlowBG";
-import { Card } from "@/components/shared/MemberShipCard";
-import { Award, Gift, LogIn, Sparkles, User, UserPlus } from "lucide-react";
+import { Gift, LogIn, Sparkles, User, UserPlus } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
+
+import { UtensilsCrossed, ChefHat, Leaf, Bell, Clock } from "lucide-react";
 
 const Welcome = () => {
   return (
     <div className="min-h-screen flex items-center justify-center py-4 px-4 overflow-hidden">
-      <GlowBG />
       <div className="relative w-full max-w-6xl rounded-3xl overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
           <div className="flex flex-col justify-center">
+            {/* welcome card */}
+            <div className="bg-[#ffffff08] border mb-3 border-white/6 backdrop-blur-md rounded-2xl px-7 p-2 ">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 flex items-center justify-center">
+                  <Sparkles
+                    className="text-orange-300 drop-shadow-[0_0_4px_orange]"
+                    size={30}
+                  />
+                </div>
+                <div>
+                  <h4 className="text-white text-lg font-semibold">
+                    Welcome Bonus
+                  </h4>
+                  <p className="text-gray-300 text-sm mt-1">
+                    Enjoy <span className="font-semibold">20% off</span> on your
+                    first order.
+                  </p>
+                </div>
+              </div>
+            </div>
             <div className="bg-[rgba(255,255,255,0.02)] border border-white/6 backdrop-blur-xl rounded-2xl p-5 flex flex-col justify-between shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
               <div className="p-3">
                 {/* Logo */}
@@ -36,85 +55,144 @@ const Welcome = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Link
                       to="/login"
-                      className="w-full bg-emerald-50 hover:bg-emerald-100 text-black font-semibold 
-                  py-3 rounded-lg shadow-lg shadow-orange-500/20 transition delay-150 active:scale-95 
-                  flex items-center justify-center gap-2"
+                      className=" w-full bg-white/5 hover:bg-white/10 text-white font-semibold py-3 rounded-xl border border-white/10 flex items-center justify-center gap-2 transition-all duration-200 active:scale-95"
                     >
-                      <LogIn className="w-5" />
-                      <span>Log-in</span>
+                      <LogIn className="w-5 h-5 text-white/90" />
+                      <span className="text-sm">Log In</span>
                     </Link>
+
                     {/* //! action */}
                     <Link
-                      to=""
-                      className="w-full bg-zinc-800 text-gray-200 border border-zinc-700 hover:bg-zinc-700 k font-semibold 
-                  py-3 rounded-lg shadow-lg shadow-orange-500/20 transition delay-150 active:scale-95 
-                  flex items-center justify-center gap-2"
+                      to="#"
+                      className=" w-full border border-white/15 bg-gray-800/5 hover:bg-gray-600/10 text-white/90 font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition-all duration-200 active:scale-95"
                     >
-                      <User className="w-5" />
-                      <span>Continue as Guest</span>
+                      <User className="w-5 h-5 text-white/70" />
+                      <span className="text-sm">Continue as Guest</span>
                     </Link>
                   </div>
 
                   <Link
                     to="/register"
-                    className="w-full bg-amber-300 hover:bg-orange-400 font-semibold 
-                  py-3 rounded-lg shadow-lg shadow-orange-500/20 transition delay-150 active:scale-95 
-                  flex items-center justify-center gap-2"
+                    className="w-full bg-orange-500/90  hover:bg-orange-500  text-white font-medium py-3 rounded-xl border border-orange-400/20 backdrop-blur-md flex items-center justify-center gap-2 transition-all duration-200 active:scale-95
+  "
                   >
-                    <UserPlus className="w-5" />
-                    <span>Register Now</span>
+                    <UserPlus className="w-5 h-5 text-white/90" />
+                    <span className="text-sm">Register Now</span>
                   </Link>
                 </form>
               </div>
             </div>
           </div>
 
-          <aside className="flex flex-col justify-start gap-3">
-            {/* welcome card */}
-            <div className="bg-[#ffffff08] border border-white/6 backdrop-blur-md rounded-2xl px-6 p-2 ">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 flex items-center justify-center">
-                  <Sparkles
-                    className="text-orange-300 animate-pulse drop-shadow-[0_0_10px_orange]"
-                    size={30}
-                  />
-                </div>
-                <div>
-                  <h4 className="text-white text-lg font-semibold">
-                    Welcome Bonus
-                  </h4>
-                  <p className="text-gray-300 text-sm mt-1">
-                    Enjoy <span className="font-semibold">20% off</span> on your
-                    first order.
-                  </p>
-                </div>
-              </div>
-            </div>
-
+          <aside className="flex flex-col justify-start gap-4">
             <div className="bg-[#ffffff05] border border-white/6 rounded-2xl p-6 ">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-white text-lg font-semibold flex items-center gap-2">
-                  <Award className="text-orange-300" /> Loyalty Program
-                </h3>
-                <span className="text-gray-400 text-xs">Member benefits</span>
-              </div>
-
               <div className="grid gap-3">
-                <Card
-                  title="Earn Points"
-                  value="1 Point = ₹1"
-                  border="Diamond"
-                />
-                <Card
-                  title="Redeem Points"
-                  value="100 Points = ₹10"
-                  border="Ruby"
-                />
-                <Card
-                  title="Bonus Points"
-                  value="+50 Points"
-                  border="Emerald"
-                />
+                <div className="grid gap-3">
+                  {/* Table Linked */}
+                  <div
+                    className="bg-white/3 border border-white/10 rounded-xl p-2.5 backdrop-blur-xl
+                  transition-all duration-300 hover:bg-white/6 hover:-translate-y-0.5
+                  flex items-start gap-3"
+                  >
+                    <UtensilsCrossed className="w-5 h-5 text-amber-300" />
+                    <div>
+                      <h4 className="text-gray-100 text-sm font-semibold">
+                        Table-Linked Experience
+                      </h4>
+                      <p className="text-gray-400 text-xs mt-1">
+                        Scan → App auto-connects with your table for a smooth
+                        dining flow.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Chef Highlights */}
+                  <div
+                    className="bg-white/3 border border-white/10 rounded-xl p-2.5 backdrop-blur-xl
+                  transition-all duration-300 hover:bg-white/6 hover:-translate-y-0.5
+                  flex items-start gap-3"
+                  >
+                    <ChefHat className="w-5 h-5 text-rose-300" />
+                    <div>
+                      <h4 className="text-gray-100 text-sm font-semibold">
+                        Chef Highlights
+                      </h4>
+                      <p className="text-gray-400 text-xs mt-1">
+                        See who crafted your dish and their speciality.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Ingredient Transparency */}
+                  <div
+                    className="bg-white/3 border border-white/10 rounded-xl p-2.5 backdrop-blur-xl
+                  transition-all duration-300 hover:bg-white/6 hover:-translate-y-0.5
+                  flex items-start gap-3"
+                  >
+                    <Leaf className="w-5 h-5 text-emerald-300" />
+                    <div>
+                      <h4 className="text-gray-100 text-sm font-semibold">
+                        Ingredient Transparency
+                      </h4>
+                      <p className="text-gray-400 text-xs mt-1">
+                        Know exactly where your ingredients come from — fresh &
+                        clean.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Silent Service */}
+                  <div
+                    className="bg-white/3 border border-white/10 rounded-xl p-2.5 backdrop-blur-xl
+                  transition-all duration-300 hover:bg-white/6 hover:-translate-y-0.5
+                  flex items-start gap-3"
+                  >
+                    <Bell className="w-5 h-5 text-blue-300" />
+                    <div>
+                      <h4 className="text-gray-100 text-sm font-semibold">
+                        Silent Service Mode
+                      </h4>
+                      <p className="text-gray-400 text-xs mt-1">
+                        Need service? Request quietly without calling loudly.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Dynamic Rewards */}
+                  <div
+                    className="bg-white/3 border border-white/10 rounded-xl p-2.5 backdrop-blur-xl
+                  transition-all duration-300 hover:bg-white/6 hover:-translate-y-0.5
+                  flex items-start gap-3"
+                  >
+                    <Sparkles className="w-5 h-5 text-purple-300" />
+                    <div>
+                      <h4 className="text-gray-100 text-sm font-semibold">
+                        Dynamic Rewards
+                      </h4>
+                      <p className="text-gray-400 text-xs mt-1">
+                        Weather, time & behavior based bonuses for a unique
+                        experience.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Kitchen Heat Map */}
+                  <div
+                    className="bg-white/3 border border-white/10 rounded-xl p-2.5 backdrop-blur-xl
+                  transition-all duration-300 hover:bg-white/6 hover:-translate-y-0.5
+                  flex items-start gap-3"
+                  >
+                    <Clock className="w-5 h-5 text-orange-300" />
+                    <div>
+                      <h4 className="text-gray-100 text-sm font-semibold">
+                        Live Kitchen Heat Map
+                      </h4>
+                      <p className="text-gray-400 text-xs mt-1">
+                        Track dish wait-times in real time. No surprises.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </aside>
