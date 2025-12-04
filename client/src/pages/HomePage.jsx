@@ -1,4 +1,3 @@
-import { GlowBG } from "@/components/shared/GlowBG";
 import axios from "axios";
 import React, { useEffect } from "react";
 
@@ -13,7 +12,6 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen">
-      <GlowBG />
     </div>
   );
 };
