@@ -7,6 +7,7 @@ import { PORT } from "./config.js";
 import authRoutes from "./router/auth.route.js";
 import tableRoute from "./router/table.route.js";
 import menuRoute from "./router/menu.route.js";
+import { getTotalUsers } from "./controllers/user.controller.js";
 
 const app = express();
 
@@ -36,6 +37,9 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1", tableRoute);
 app.use("/api/v1",menuRoute);
+
+// User Routes
+app.use("/api/v1", getTotalUsers)
 
 
 // Server
