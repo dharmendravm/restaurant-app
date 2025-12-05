@@ -158,8 +158,7 @@ const Register = () => {
 
                   <button
                   onClick={handleChange}
-                    type="submit"
-                    className="w-full bg-orange-500/90  hover:bg-orange-500  text-white font-medium py-2.5 rounded-xl border border-orange-400/20 backdrop-blur-md flex items-center justify-center gap-2 transition-all duration-200 active:scale-95
+                    className="w-full bg-orange-500/90  hover:bg-orange-500 text-white font-medium py-2.5 rounded-xl border border-orange-400/20 backdrop-blur-md flex items-center justify-center gap-2 transition-all duration-200 active:scale-95
   "
                   >
                     <UserPlus className="w-5 h-5 text-white/90" />
