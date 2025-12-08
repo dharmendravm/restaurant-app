@@ -4,18 +4,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/redux/authSlice";
 import { Mail, Lock, ArrowRight, Gift, LogIn } from "lucide-react";
-import { BrandLogo } from "@/components/shared/BrandLogo";
-import { GoogleLoginUI } from "@/components/GoogleUI";
-import { InputFild } from "@/components/shared/InputFild";
+import { BrandLogo } from "@/layout/BrandLogo";
+import { GoogleLoginUI } from "@/components/ui/GoogleUI";
+import { InputFild } from "@/components/ui/InputFild";
 
 import { Sparkles, Award, Percent } from "lucide-react";
-import { Tier } from "@/components/shared/TierCard";
-import { Card } from "@/components/shared/MemberShipCard";
+import { Tier } from "@/components/ui/TierCard";
+import { Card } from "@/components/ui/MemberShipCard";
+import { useToast } from "@/components/ui/toast";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.auth);
+  const { success, error: toastError } = useToast();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -29,10 +31,16 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Login API call + toast on success / error
     dispatch(login(formData))
       .unwrap()
       .then(() => {
+        success("Welcome back", "You have logged in successfully.");
         navigate("/");
+      })
+      .catch((errMsg) => {
+        toastError("Login failed", errMsg || "Something went wrong. Please try again.");
       });
   };
   return (

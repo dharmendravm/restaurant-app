@@ -11,18 +11,20 @@ import {
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { BrandLogo } from "@/components/shared/BrandLogo";
-import { InputFild } from "@/components/shared/InputFild";
+import { BrandLogo } from "@/layout/BrandLogo";
+import { InputFild } from "@/components/ui/InputFild";
 import { useDispatch } from "react-redux";
 import { register } from "@/redux/authSlice";
 
-import { Tier } from "@/components/shared/TierCard";
-import { Card } from "@/components/shared/MemberShipCard";
+import { Tier } from "@/components/ui/TierCard";
+import { Card } from "@/components/ui/MemberShipCard";
 import { Award, Percent, Sparkles } from "lucide-react";
+import { useToast } from "@/components/ui/toast";
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { success, error: toastError } = useToast(); // toast helpers
 
   const [formData, setFormData] = useState({
     name: "",
@@ -48,10 +50,16 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+
+    // Register API call + toast on success / error
     dispatch(register(formData))
       .unwrap()
       .then(() => {
+        success("Account created", "Welcome to TableOrbit! Your account is ready.");
         navigate("/");
+      })
+      .catch((errMsg) => {
+        toastError("Registration failed", errMsg || "Something went wrong. Please try again.");
       });
   };
   return (

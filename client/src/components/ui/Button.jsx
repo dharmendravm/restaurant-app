@@ -5,19 +5,13 @@ const Button = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  let label = "Button";
+  const isHome = pathname === "/";
 
-  if (pathname === "/") {
-    label = "Login";
-  } else {
-    label = "Explore";
-  }
+  const label = isHome ? "Menu" : "Home";
+  const route = isHome ? "/menu" : "/";
 
   const handleClick = () => {
-    const route = "/" + label.toLowerCase().replace(" ", "");
     navigate(route);
-    ("");
-    console.log("butoon cliked");
   };
 
   return (

@@ -1,11 +1,38 @@
-import { BrandLogo } from "@/components/shared/BrandLogo";
+import { BrandLogo } from "@/layout/BrandLogo";
 import { Gift, LogIn, Sparkles, User, UserPlus } from "lucide-react";
 import React from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { UtensilsCrossed, ChefHat, Leaf, Bell, Clock } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { session as createSession } from "@/redux/guestSlice";
+import { useToast } from "@/components/ui/toast";
 
 const Welcome = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const { success, error: toastError } = useToast();
+
+  const handleContinueAsGuest = async () => {
+    try {
+      const qrSlug = searchParams.get("qr");
+      const storedDeviceId = localStorage.getItem("deviceId");
+      const deviceId = storedDeviceId || (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`);
+
+      if (!storedDeviceId) {
+        localStorage.setItem("deviceId", deviceId);
+      }
+
+      const payload = { deviceId, qrSlug };
+      await dispatch(createSession(payload)).unwrap();
+
+      success("Guest session started", "You are now browsing in guest mode.");
+      navigate("/menu");
+    } catch (errMsg) {
+      toastError("Guest login failed", errMsg || "Something went wrong. Please try again.");
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center py-4 px-4 overflow-hidden">
       <div className="relative w-full max-w-6xl rounded-3xl overflow-hidden">
@@ -64,6 +91,10 @@ const Welcome = () => {
                     {/* //! action */}
                     <Link
                       to="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleContinueAsGuest();
+                      }}
                       className=" w-full border border-white/15 bg-gray-800/5 hover:bg-gray-600/10 text-white/90 font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition-all duration-200 active:scale-95"
                     >
                       <User className="w-5 h-5 text-white/70" />
