@@ -5,6 +5,7 @@ import ConnectDB from "./config/database.js";
 import { PORT } from "./config.js";
 
 import authRoutes from "./router/auth.route.js";
+import sessionRoute from './router/session.route.js'
 import tableRoute from "./router/table.route.js";
 import menuRoute from "./router/menu.route.js";
 import getTotalUsers from "./router/user.route.js";
@@ -38,6 +39,7 @@ app.get("/", (req, res) => {
 
 // Api Routes
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1", sessionRoute)
 app.use("/api/v1", tableRoute);
 app.use("/api/v1",menuRoute);
 
