@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Plus, Trash2, UtensilsCrossed } from "lucide-react";
-import { MenuCard } from "@/components/ui/MenuCard";
 import { useToast } from "@/components/ui/toast";
-
 
 const AdminMenu = () => {
   const { success, info } = useToast();
@@ -35,8 +33,13 @@ const AdminMenu = () => {
         "https://images.pexels.com/photos/5908225/pexels-photo-5908225.jpeg?auto=compress&cs=tinysrgb&w=800",
     };
 
-
-    setFormData({ title: "", subtitle: "", price: "", category: "Main Course", image: "" });
+    setFormData({
+      title: "",
+      subtitle: "",
+      price: "",
+      category: "Main Course",
+      image: "",
+    });
     success("Dish added", `${newItem.title} added to menu.`);
   };
 
@@ -56,17 +59,16 @@ const AdminMenu = () => {
             All Menu Items
           </h1>
           <p className="text-[12px] text-[#8b8278] max-w-md mt-1">
-            Add, edit or remove dishes from your restaurant menu. Changes here should
-            reflect for all customers once you connect it with the backend API.
+            Add, edit or remove dishes from your restaurant menu. Changes here
+            should reflect for all customers once you connect it with the
+            backend API.
           </p>
         </div>
       </section>
 
       <section className="grid grid-cols-1 lg:grid-cols-[1.8fr_1.1fr] gap-8 items-start">
         {/* All items */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-
-        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5"></div>
 
         {/* Add item form */}
         <aside className="bg-[#fffdf8] border border-[#f3e2d2] rounded-3xl p-5 shadow-[0_18px_45px_rgba(0,0,0,0.08)] space-y-3">
@@ -80,7 +82,9 @@ const AdminMenu = () => {
 
           <form onSubmit={handleAddItem} className="space-y-3 text-[11px]">
             <div>
-              <label className="mb-1 block font-medium text-[#5f4a3a]">Dish name</label>
+              <label className="mb-1 block font-medium text-[#5f4a3a]">
+                Dish name
+              </label>
               <input
                 type="text"
                 name="title"
@@ -92,7 +96,9 @@ const AdminMenu = () => {
             </div>
 
             <div>
-              <label className="mb-1 block font-medium text-[#5f4a3a]">Short description</label>
+              <label className="mb-1 block font-medium text-[#5f4a3a]">
+                Short description
+              </label>
               <textarea
                 name="subtitle"
                 value={formData.subtitle}
@@ -105,7 +111,9 @@ const AdminMenu = () => {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="mb-1 block font-medium text-[#5f4a3a]">Price (₹)</label>
+                <label className="mb-1 block font-medium text-[#5f4a3a]">
+                  Price (₹)
+                </label>
                 <input
                   type="number"
                   name="price"
@@ -117,7 +125,9 @@ const AdminMenu = () => {
               </div>
 
               <div>
-                <label className="mb-1 block font-medium text-[#5f4a3a]">Category</label>
+                <label className="mb-1 block font-medium text-[#5f4a3a]">
+                  Category
+                </label>
                 <select
                   name="category"
                   value={formData.category}
@@ -134,7 +144,9 @@ const AdminMenu = () => {
             </div>
 
             <div>
-              <label className="mb-1 block font-medium text-[#5f4a3a]">Image URL (optional)</label>
+              <label className="mb-1 block font-medium text-[#5f4a3a]">
+                Image URL (optional)
+              </label>
               <input
                 type="url"
                 name="image"

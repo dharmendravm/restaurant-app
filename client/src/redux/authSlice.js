@@ -82,7 +82,7 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         console.log(action.payload);
 
-        state.error = action.payload;
+        state.error = action.payload || "Internet or Server error";
         state.loading = false;
       });
     builder

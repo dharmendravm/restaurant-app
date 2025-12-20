@@ -19,6 +19,7 @@ import { register } from "@/redux/authSlice";
 // import { Card } from "@/components/ui/MemberShipCard";
 import { Award, Percent, Sparkles } from "lucide-react";
 import { useToast } from "@/components/ui/toast";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -69,31 +70,36 @@ const Register = () => {
       });
   };
   return (
-    <div className="min-h-screen flex items-center justify-center py-4 px-4  overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center py-4 px-4  overflow-hidden  bg-app-bg text-text-main relative">
+      <div className="absolute top-4 right-4 z-50">
+        <ThemeToggle />
+      </div>
       <div className="relative w-full max-w-6xl rounded-3xl overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch overflow-hidden">
           <div className="flex flex-col">
-            <div className="bg-[rgba(255,255,255,0.02)] border border-white/6 backdrop-blur-xl rounded-2xl p-5 px-6 flex flex-col justify-between shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
+            <div className="bg-card-bg border border-border backdrop-blur-xl rounded-2xl p-5 px-6 flex flex-col justify-between shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
               <div>
                 <div className="mb-4">
                   <BrandLogo />
                 </div>
 
-                <h1 className="text-3xl lg:text-4xl font-extrabold text-white leading-tight">
+                <h1 className="text-3xl lg:text-4xl font-extrabold text-text-main leading-tight">
                   Create Account
                 </h1>
-                <p className="text-gray-400 text-sm mt-2 max-w-lg">
+                <p className="text-text-main text-sm mt-2 max-w-lg">
                   Join{" "}
-                  <span className="text-orange-200 font-bold">TableOrbit</span>{" "}
+                  <span className="bg-brand-main-200 font-bold">
+                    TableOrbit
+                  </span>{" "}
                   & unlock premium restaurant rewards.
                   <GiftIcon
                     size={16}
-                    className="inline ml-1 -translate-y-0.5 text-orange-300"
+                    className="inline ml-1 -translate-y-0.5 text-brand-main"
                   />
                 </p>
 
                 {error && (
-                  <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+                  <div className="mt-4 p-3 bg-danger/10 border border-danger/30 rounded-lg text-danger text-sm">
                     {error}
                   </div>
                 )}
@@ -103,7 +109,7 @@ const Register = () => {
                     <InputFild
                       label="Full Name"
                       icon={
-                        <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
                       }
                       type="text"
                       name="name"
@@ -115,7 +121,7 @@ const Register = () => {
                     <InputFild
                       label="Email address"
                       icon={
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
                       }
                       type="email"
                       name="email"
@@ -129,7 +135,7 @@ const Register = () => {
                     <InputFild
                       label="Phone number"
                       icon={
-                        <TabletSmartphone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                        <TabletSmartphone className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
                       }
                       type="tel"
                       name="phone"
@@ -140,7 +146,7 @@ const Register = () => {
                     <InputFild
                       label="Password"
                       icon={
-                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
                       }
                       type="password"
                       name="password"
@@ -153,7 +159,7 @@ const Register = () => {
                   <InputFild
                     label="Confirm Password"
                     icon={
-                      <LockKeyhole className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                      <LockKeyhole className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" />
                     }
                     type="password"
                     name="confirmPassword"
@@ -167,10 +173,10 @@ const Register = () => {
                       type="checkbox"
                       className="w-4 h-4 accent-orange-400 mt-1"
                     />
-                    <p className="text-gray-400 text-xs">
+                    <p className="text-text-muted text-xs">
                       I agree to the{" "}
-                      <span className="text-orange-300 underline">Terms</span> &{" "}
-                      <span className="text-orange-300 underline">
+                      <span className="text-text-accent underline">Terms</span> &{" "}
+                      <span className="text-text-accent underline">
                         Privacy Policy
                       </span>
                     </p>
@@ -178,27 +184,26 @@ const Register = () => {
 
                   <button
                     type="submit"
-                    className="w-full bg-orange-500/90  hover:bg-orange-500 text-white font-medium py-2.5 rounded-xl border border-orange-400/20 backdrop-blur-md flex items-center justify-center gap-2 transition-all duration-200 active:scale-95"
+                    className="w-full bg-brand-main  hover:opacity-90 text-text-main font-medium py-2.5 rounded-xl border border-brand-main backdrop-blur-md flex items-center justify-center gap-2 transition-all duration-200 active:scale-95"
                   >
                     {loading ? (
-                     " Creating Account..."
+                      " Creating Account..."
                     ) : (
                       <>
-                    <UserPlus className="w-5 h-5 text-white/90" />
-                    <span className="text-sm">Register Now</span>
-                    </>
+                        <UserPlus className="w-5 h-5 text-text-main/90" />
+                        <span className="text-sm">Register Now</span>
+                      </>
                     )}
-
                   </button>
                 </form>
               </div>
 
-              <div className="pt-2 text-center text-xs text-gray-500">
+              <div className="pt-2 text-center text-xs text-text-muted">
                 <p>
                   Already have an account?{" "}
                   <Link
                     to="/login"
-                    className="text-white font-medium hover:underline inline-flex items-center gap-1"
+                    className="text-text-accent font-medium hover:underline inline-flex items-center gap-1"
                   >
                     Sign in <ArrowRight className="w-4" />
                   </Link>
@@ -211,21 +216,21 @@ const Register = () => {
           <aside className="flex flex-col justify-start gap-3">
             {/* welcome card */}
             <div
-              className="bg-[#ffffff08] border border-white/6 backdrop-blur-md rounded-2xl px-6 p-2 
+              className="bg-card-bg border border-border backdrop-blur-md rounded-2xl px-6 p-2 
             "
             >
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 flex items-center justify-center">
                   <Sparkles
-                    className="text-orange-300 drop-shadow-[0_0_4px_orange]"
+                    className="bg-brand-main-300 drop-shadow-[0_0_4px_orange]"
                     size={30}
                   />
                 </div>
                 <div>
-                  <h4 className="text-white text-lg font-semibold">
+                  <h4 className="text-text-muteded text-lg font-semibold">
                     Welcome Bonus
                   </h4>
-                  <p className="text-gray-300 text-sm mt-1">
+                  <p className="text-text-muted text-sm mt-1">
                     Enjoy <span className="font-semibold">20% off</span> on your
                     first order.
                   </p>
@@ -233,12 +238,12 @@ const Register = () => {
               </div>
             </div>
 
-            <div className="bg-[#ffffff05] border border-white/6 rounded-2xl p-6 ">
+            <div className="bg-card-bg border border-border rounded-2xl p-6 ">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-white text-lg font-semibold flex items-center gap-2">
-                  <Award className="text-orange-300" /> Loyalty Program
+                  <Award className="bg-brand-main-300" /> Loyalty Program
                 </h3>
-                <span className="text-gray-400 text-xs">Member benefits</span>
+                <span className="text-text-muted text-xs">Member benefits</span>
               </div>
 
               <div className="grid gap-3">
@@ -261,9 +266,9 @@ const Register = () => {
             </div>
 
             {/* Membership */}
-            <div className="bg-[rgba(255,255,255,0.02)] border border-white/6 rounded-2xl px-6 p-2">
+            <div className="bg-card-bg border border-border rounded-2xl px-6 p-2">
               <h4 className="text-white text-lg font-semibold mb-4 flex items-center gap-2">
-                <Percent className="text-orange-300" /> Membership Tiers
+                <Percent className="bg-brand-main-300" /> Membership Tiers
               </h4>
               <Tier
                 title="Bronze"
@@ -304,7 +309,7 @@ const InputFild = ({
 }) => {
   return (
     <div>
-      <label className="text-xs text-gray-300 mb-2 block">{label}</label>
+      <label className="text-xs text-text-muted mb-2 block">{label}</label>
       <div className="relative">
         {icon}
         <input
@@ -313,7 +318,7 @@ const InputFild = ({
           value={value}
           onChange={onChange}
           placeholder={placeholder}
-          className="w-full pl-11 pr-3 py-2.5 bg-gray-900/50 border border-gray-800 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:border-orange-300/40 focus:ring-1 focus:ring-orange-400/20 transition-all duration-200 text-sm"
+          className="w-full pl-11 pr-3 py-2.5 bg-hover border border-border rounded-lg text-text-main placeholder-gray-500 focus:outline-none focus:border-orange-300/40 focus:ring-1 focus:ring-orange-400/20 transition-all duration-200 text-sm"
         />
       </div>
     </div>
@@ -331,16 +336,16 @@ const borderVariants = {
 
 const Tier = ({ title, range, offer, border }) => (
   <div
-    className={`bg-[#00000040] border  border-gray-900 rounded-lg p-1 px-4 mb-2  transition-all duration-300 ease-out cursor-pointer
-      hover:bg-[#1a1a1a]/20 hover:-translate-y-0.5 ${borderVariants[border]}`}
+    className={`bg-card-bg border  border-border rounded-lg p-1 px-4 mb-2  transition-all duration-300 ease-out cursor-pointer
+      hover:bg-hover hover:-translate-y-0.5 ${borderVariants[border]}`}
   >
     <div className="flex items-center justify-between">
-      <span className="text-gray-100 text-sm font-semibold">
+      <span className="text-text-main text-sm font-semibold">
         {title} Member
       </span>
-      <span className="text-gray-400 text-xs">{range}</span>
+      <span className="text-text-muted text-xs">{range}</span>
     </div>
-    <p className="text-gray-500 text-xs mt-1">{offer}</p>
+    <p className="text-text-muted text-xs mt-1">{offer}</p>
   </div>
 );
 
@@ -353,7 +358,7 @@ const iconMap = {
 const Card = ({ title, value, border }) => (
   <div
     className={`
-      bg-[#0f0f0f]/40 border border-white/10 rounded-xl px-4 p-2
+      bg-card-bg border border-white/10 rounded-xl px-4 p-2
       backdrop-blur-xl flex items-center justify-between 
       transition-all duration-300 ease-out cursor-pointer
       hover:bg-[#1a1a1a]/50 hover:-translate-y-0.5
@@ -362,9 +367,9 @@ const Card = ({ title, value, border }) => (
   >
     <div className="flex items-center gap-3">
       <div className="opacity-80">{iconMap[title]}</div>
-      <h4 className="text-gray-100 text-sm font-medium">{title}</h4>
+      <h4 className="text-text-main text-sm font-medium">{title}</h4>
     </div>
 
-    <p className="text-gray-400 text-xs font-normal">{value}</p>
+    <p className="text-text-muted text-xs font-normal">{value}</p>
   </div>
 );

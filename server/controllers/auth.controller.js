@@ -1,6 +1,9 @@
 import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
 import User from "../models/user.js";
 import bcrypt from "bcryptjs";
+import transporter from "../services/emailService.js";
+import registerTemplate from "../services/emailtemplates/registerTemplate.js";
+import { MAIL_USER } from "../config.js";
 
 // Register new user
 export const register = async (req, res, next) => {
@@ -40,6 +43,20 @@ export const register = async (req, res, next) => {
     const userResponse = newUser.toObject();
     delete userResponse.password;
 
+    //integrate mail service here
+    // integrate mail service here
+    const info = await transporter.sendMail({
+      from: MAIL_USER,
+      to: newUser.email,
+      subject: "Welcome to TableOrbit 🎉 | 30% OFF Inside",
+      html: registerTemplate({
+        customerName: newUser.name,
+        restaurantName: "TableOrbit",
+        orderLink: "https//",
+      }),
+    });
+    console.log("mail sent", info.messageId);
+
     res.status(201).json({
       success: true,
       message: "Account created sucsessfully",
@@ -61,7 +78,7 @@ export const login = async (req, res, next) => {
       throw error;
     }
     // Check user exists
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: email.toLowerCase() });
 
     if (!user) {
       const error = new Error("Invalid email or password");
@@ -104,7 +121,7 @@ export const login = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       message: "Login successful",
-      data: user,
+      data: userResponse,
       accessToken,
       refreshToken,
     });
