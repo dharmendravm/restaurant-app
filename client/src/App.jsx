@@ -12,10 +12,11 @@ import AdminRoute from "@/routes/AdminRoute";
 import AdminMenu from "@/pages/admin/AdminMenu";
 import UserProfile from "./pages/UserProfile";
 import CartPage from "./pages/CartPage";
+import FindYourAccount from "./pages/auth/FindYourAccount";
 
 function App() {
   return (
-    <div className="bg-[#000000] min-h-screen">
+    <div className="bg-background min-h-screen">
       <Router>
         <Routes>
           {/* Public Routes */}
@@ -42,6 +43,17 @@ function App() {
               <ProtectedRoutes>
                 <AuthenticatedLayout>
                   <UserProfile />
+                </AuthenticatedLayout>
+              </ProtectedRoutes>
+            }
+          />
+          {/* User Forgot Password */}
+          <Route
+            path="/recovery"
+            element={
+              <ProtectedRoutes>
+                <AuthenticatedLayout>
+                  <FindYourAccount />
                 </AuthenticatedLayout>
               </ProtectedRoutes>
             }

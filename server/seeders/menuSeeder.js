@@ -14,26 +14,10 @@ const menuItems = [
     isAvailable: true
   },
   {
-    name: 'Bruschetta',
-    description: 'Toasted bread topped with fresh tomatoes, basil, garlic, and mozzarella',
-    image: 'https://images.unsplash.com/photo-1572441713132-51c75654db73?w=800&h=600&fit=crop',
-    price: 249,
-    category: 'Appetizers',
-    isAvailable: true
-  },
-  {
     name: 'Mozzarella Sticks',
     description: 'Golden fried mozzarella cheese sticks served with marinara sauce',
     image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800&h=600&fit=crop',
     price: 199,
-    category: 'Appetizers',
-    isAvailable: true
-  },
-  {
-    name: 'Vegetable Spring Rolls',
-    description: 'Crispy spring rolls filled with fresh vegetables, served with sweet and sour sauce',
-    image: 'https://images.unsplash.com/photo-1615367423057-4b46b8a1d69a?w=800&h=600&fit=crop',
-    price: 179,
     category: 'Appetizers',
     isAvailable: true
   },
@@ -118,14 +102,6 @@ const menuItems = [
     description: 'Classic pizza with fresh mozzarella, tomato sauce, and basil',
     image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&h=600&fit=crop',
     price: 399,
-    category: 'Main Courses',
-    isAvailable: true
-  },
-  {
-    name: 'Vegetable Burger',
-    description: 'Grilled vegetable patty with lettuce, tomato, onion, and special sauce on a brioche bun',
-    image: 'https://images.unsplash.com/photo-1525059696034-4967a7290027?w=800&h=600&fit=crop',
-    price: 349,
     category: 'Main Courses',
     isAvailable: true
   },
@@ -217,58 +193,6 @@ const menuItems = [
     category: 'Main Courses',
     isAvailable: true
   },
-
-  // Breads & Rotis
-  {
-    name: 'Garlic Naan',
-    description: 'Soft leavened bread brushed with garlic butter and herbs',
-    image: 'https://images.unsplash.com/photo-1572441713132-51c75654db73?w=800&h=600&fit=crop',
-    price: 79,
-    category: 'Breads & Rotis',
-    isAvailable: true
-  },
-  {
-    name: 'Butter Naan',
-    description: 'Classic naan bread brushed with butter',
-    image: 'https://images.unsplash.com/photo-1572441713132-51c75654db73?w=800&h=600&fit=crop',
-    price: 69,
-    category: 'Breads & Rotis',
-    isAvailable: true
-  },
-  {
-    name: 'Plain Roti',
-    description: 'Whole wheat flatbread, freshly made',
-    image: 'https://images.unsplash.com/photo-1572441713132-51c75654db73?w=800&h=600&fit=crop',
-    price: 49,
-    category: 'Breads & Rotis',
-    isAvailable: true
-  },
-  {
-    name: 'Tandoori Roti',
-    description: 'Whole wheat bread baked in a tandoor oven',
-    image: 'https://images.unsplash.com/photo-1572441713132-51c75654db73?w=800&h=600&fit=crop',
-    price: 59,
-    category: 'Breads & Rotis',
-    isAvailable: true
-  },
-  {
-    name: 'Stuffed Paratha',
-    description: 'Flaky flatbread stuffed with spiced potatoes',
-    image: 'https://images.unsplash.com/photo-1572441713132-51c75654db73?w=800&h=600&fit=crop',
-    price: 99,
-    category: 'Breads & Rotis',
-    isAvailable: true
-  },
-
-  // Desserts
-  {
-    name: 'Chocolate Lava Cake',
-    description: 'Warm chocolate cake with a molten center, served with vanilla ice cream',
-    image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=800&h=600&fit=crop',
-    price: 249,
-    category: 'Desserts',
-    isAvailable: true
-  },
   {
     name: 'New York Cheesecake',
     description: 'Rich and creamy cheesecake with a graham cracker crust, topped with fresh berries',
@@ -351,14 +275,7 @@ const menuItems = [
     category: 'Beverages',
     isAvailable: true
   },
-  {
-    name: 'Fresh Lemonade',
-    description: 'Homemade lemonade with fresh lemons and mint',
-    image: 'https://images.unsplash.com/photo-1523677011781-c91d1bbe2fdc?w=800&h=600&fit=crop',
-    price: 119,
-    category: 'Beverages',
-    isAvailable: true
-  },
+
   {
     name: 'Coffee',
     description: 'Freshly brewed coffee',
@@ -399,14 +316,6 @@ const menuItems = [
     category: 'Beverages',
     isAvailable: true
   },
-  {
-    name: 'Fresh Lime Soda',
-    description: 'Refreshing lime soda with mint and salt',
-    image: 'https://images.unsplash.com/photo-1523677011781-c91d1bbe2fdc?w=800&h=600&fit=crop',
-    price: 99,
-    category: 'Beverages',
-    isAvailable: true
-  }
 ];
 
 const seedMenu = async () => {

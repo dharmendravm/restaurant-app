@@ -11,6 +11,7 @@ import menuRoutes from "./router/menu.route.js";
 import getTotalUsers from "./router/user.route.js";
 import { errorHandler, notFound } from "./middlewares/errormiddleware.js";
 import cartRoute from "./router/cart.route.js";
+import couponRoute from './router/coupen.route.js'
 
 const app = express();
 
@@ -19,16 +20,16 @@ app.use(express.json());
 
 app.use(cors());
 // CORS
-// app.use(
-//   cors({
-//     origin: [
-//       "http://localhost:5173",
-//       "http://localhost:5174",
-//       "https://restaurant-app-gold-three.vercel.app",
-//       "http://192.168.1.5:5173"
-//     ],
-//   })
-// );
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "https://restaurant-app-gold-three.vercel.app",
+      "http://192.168.1.5:5173"
+    ],
+  })
+);
 
 // DB Connect
 await ConnectDB();
@@ -44,6 +45,7 @@ app.use("/api/v1", sessionRoute);
 app.use("/api/v1", tableRoute);
 app.use('/api/v1' , menuRoutes);
 app.use('/api/v1/cart', cartRoute)
+app.use('/api/v1/coupens', couponRoute)
 
 // User Routes
 app.use("/api/v1", getTotalUsers);
@@ -55,6 +57,6 @@ app.use(notFound);
 app.use(errorHandler);
 
 // Server
-const server = app.listen(PORT, () => {
-  console.log(`Server is Running on Port: ${PORT}`);
+const server = app.listen(PORT , "0.0.0.0", () => {
+  console.log(`Server is Running on Port: 0.0.0.0 : ${PORT}"`);
 });
