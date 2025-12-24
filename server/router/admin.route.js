@@ -10,5 +10,4 @@ const router = express.Router();
 router.post('/users/all',verifyToken, checkRole(["admin"]), getTotalUsers);
 router.post( '/menu', verifyToken, checkRole(["admin"]), upload.single('image'), createMenu );
 
-
 export default router;

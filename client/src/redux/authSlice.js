@@ -52,7 +52,6 @@ const authSlice = createSlice({
     error: null,
 
     user: storedUser ? JSON.parse(storedUser) : null,
-
     accessToken: localStorage.getItem("accessToken"),
     refreshToken: localStorage.getItem("refreshToken"),
   },

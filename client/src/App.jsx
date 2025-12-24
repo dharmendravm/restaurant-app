@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Welcome from "@/pages/user/Welcome";
 import Login from "@/pages/user/auth/Login";
-import Register from "@/pages/user/auth/Register";
+import Register from "@/pages/user/Register";
 import ForgotPassword from "./pages/user/auth/ForgotPassword";
 import ResetPassword from "./pages/user/auth/ResetPassword";
 
@@ -14,6 +14,9 @@ import AuthenticatedLayout from "@/layout/AuthenticatedLayout";
 import HomePage from "@/pages/user/HomePage";
 import CartPage from "./pages/user/Cart/CartPage";
 import UserProfile from "./pages/user/UserProfile";
+import ProtectedAdmin from "./routes/ProtectedAdmin";
+import AdminLayout from "./layout/AdminLayout";
+import Dashboard from "./pages/admin/dashboard/Dashboard";
 
 function App() {
   return (
@@ -38,6 +41,11 @@ function App() {
             </Route>
           </Route>
 
+          <Route element={<ProtectedAdmin />}>
+            <Route element={<AdminLayout />}>
+              <Route path="/admin" element={<Dashboard />} />
+            </Route>
+          </Route>
         </Routes>
       </Router>
     </div>

@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { User, Mail, Lock, ArrowRight, GiftIcon, UserPlus, LockKeyhole, TabletSmartphone } from "lucide-react";
+import {
+  User,
+  Mail,
+  Lock,
+  ArrowRight,
+  GiftIcon,
+  UserPlus,
+  LockKeyhole,
+  TabletSmartphone,
+} from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,9 +20,6 @@ import AuthInput from "@/components/auth/AuthInput";
 import AuthButton from "@/components/auth/AuthButton";
 import AuthAsideContent from "@/components/ui/AuthAsideContent";
 import { useToast } from "@/components/ui/toast";
-
-
-
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -46,9 +52,7 @@ const Register = () => {
       setPasswordError("Passwords do not match");
       return;
     }
-    console.log("Form submitted:", formData);
 
-    // Register API call + toast on success / error
     dispatch(authRegister(formData))
       .unwrap()
       .then(() => {

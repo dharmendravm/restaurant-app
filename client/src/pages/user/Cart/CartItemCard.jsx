@@ -3,14 +3,7 @@ export const CartItemCard = ({ item, actions }) => {
 
   return (
     <div
-      className="
-        flex flex-col sm:flex-row
-        gap-4 p-4
-        bg-card-bg border border-border
-        rounded-2xl
-        hover:bg-hover
-        transition-all duration-300
-      "
+      className="flex flex-col sm:flex-row gap-4 p-4 bg-card-bg/60 border border-border rounded-2xl hover:bg-hover transition-all duration-300"
     >
       {/* Image */}
       <div className="w-full sm:w-20 h-40 sm:h-20 rounded-xl overflow-hidden border">
@@ -47,12 +40,7 @@ export const CartItemCard = ({ item, actions }) => {
 
       {/* Right */}
       <div
-        className="
-          w-full sm:w-auto
-          flex justify-between items-center
-          sm:block sm:text-right
-          space-y-0 sm:space-y-2
-        "
+        className="w-full sm:w-auto flex justify-between items-center sm:block sm:text-right space-y-0 sm:space-y-2"
       >
         <p className="font-semibold text-text-main">
           ₹ {displayItem.price * quantity}

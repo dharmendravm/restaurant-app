@@ -1,149 +1,141 @@
-import mongoose from "mongoose";
-import Menu from "../models/menu.js";
-import connectDB from "../config/database.js";
+https://res.cloudinary.com/<cloud-name>/image/upload/
+f_auto,q_auto,w_600
+/menu/truffle-mushroom-crostini.jpg
 
-/* ---------------- IMAGE HELPER (SAFE & WORKING) ---------------- */
 
-const imageByCategory = (category) => {
-  const map = {
-    Appetizers: "https://loremflickr.com/800/600/appetizer,food",
-    Soups: "https://loremflickr.com/800/600/soup,food",
-    "Main Courses": "https://loremflickr.com/800/600/indian,food",
-    "Breads & Rotis": "https://loremflickr.com/800/600/naan,roti",
-    Desserts: "https://loremflickr.com/800/600/dessert",
-    Beverages: "https://loremflickr.com/800/600/drink,beverage",
-  };
 
-  return map[category] || "https://loremflickr.com/800/600/food";
-};
-
-/* ---------------- MENU DATA ---------------- */
-
-const menuItems = [
-  // Appetizers
+const menuData = [
+  // ===== STARTERS =====
   {
-    name: "Paneer Tikka",
-    description: "Grilled paneer cubes marinated with spices",
-    price: 329,
-    category: "Appetizers",
-    isAvailable: true,
+    name: "Truffle Mushroom Crostini",
+    description: "Crispy toasted bread topped with creamy truffle-infused mushroom spread.",
+    image: "https://example.com/images/truffle-mushroom-crostini.jpg",
+    price: 450,
+    category: "Starters",
+    isAvailable: true
   },
   {
-    name: "Vegetable Samosa",
-    description: "Crispy fried pastry with spiced potato filling",
-    price: 149,
-    category: "Appetizers",
-    isAvailable: true,
+    name: "Tandoori Paneer Skewers",
+    description: "Soft paneer cubes marinated in traditional tandoori spices and grilled to perfection.",
+    image: "https://example.com/images/tandoori-paneer-skewers.jpg",
+    price: 350,
+    category: "Starters",
+    isAvailable: true
+  },
+  {
+    name: "Prawn Tempura",
+    description: "Lightly battered prawns fried until golden and served with sweet chili dip.",
+    image: "https://example.com/images/prawn-tempura.jpg",
+    price: 480,
+    category: "Starters",
+    isAvailable: true
   },
 
-  // Soups
+  // ===== VEGETARIAN MAINS =====
   {
-    name: "Tomato Soup",
-    description: "Creamy tomato soup with herbs",
-    price: 179,
-    category: "Soups",
-    isAvailable: true,
+    name: "Wild Mushroom Risotto",
+    description: "Creamy Italian risotto cooked with assorted wild mushrooms and parmesan.",
+    image: "https://example.com/images/mushroom-risotto.jpg",
+    price: 620,
+    category: "Vegetarian Mains",
+    isAvailable: true
   },
   {
-    name: "Sweet Corn Soup",
-    description: "Sweet corn soup with vegetables",
-    price: 189,
-    category: "Soups",
-    isAvailable: true,
-  },
-
-  // Main Courses
-  {
-    name: "Paneer Butter Masala",
-    description: "Paneer in rich creamy tomato gravy",
-    price: 399,
-    category: "Main Courses",
-    isAvailable: true,
+    name: "Paneer Lababdar",
+    description: "Rich tomato-based gravy cooked with soft paneer cubes and aromatic spices.",
+    image: "https://example.com/images/paneer-lababdar.jpg",
+    price: 450,
+    category: "Vegetarian Mains",
+    isAvailable: true
   },
   {
-    name: "Vegetable Biryani",
-    description: "Aromatic basmati rice cooked with vegetables",
-    price: 349,
-    category: "Main Courses",
-    isAvailable: true,
+    name: "Stuffed Bell Peppers",
+    description: "Bell peppers stuffed with quinoa, vegetables, and herbs, baked in tomato sauce.",
+    image: "https://example.com/images/stuffed-bell-peppers.jpg",
+    price: 480,
+    category: "Vegetarian Mains",
+    isAvailable: true
   },
 
-  // Breads & Rotis
+  // ===== NON-VEGETARIAN MAINS =====
   {
-    name: "Butter Naan",
-    description: "Soft naan brushed with butter",
-    price: 69,
-    category: "Breads & Rotis",
-    isAvailable: true,
+    name: "Butter Chicken Royale",
+    description: "Classic butter chicken prepared with slow-cooked tandoori chicken and creamy sauce.",
+    image: "https://example.com/images/butter-chicken.jpg",
+    price: 520,
+    category: "Non-Vegetarian Mains",
+    isAvailable: true
   },
   {
-    name: "Tandoori Roti",
-    description: "Whole wheat bread cooked in tandoor",
-    price: 59,
-    category: "Breads & Rotis",
-    isAvailable: true,
+    name: "Herb Crusted Lamb Chops",
+    description: "Tender lamb chops crusted with herbs and grilled, served with rich jus.",
+    image: "https://example.com/images/lamb-chops.jpg",
+    price: 1320,
+    category: "Non-Vegetarian Mains",
+    isAvailable: true
+  },
+  {
+    name: "Chicken Chettinad",
+    description: "South Indian style chicken curry cooked with roasted spices and coconut.",
+    image: "https://example.com/images/chicken-chettinad.jpg",
+    price: 530,
+    category: "Non-Vegetarian Mains",
+    isAvailable: true
   },
 
-  // Desserts
+  // ===== SEAFOOD =====
   {
-    name: "Gulab Jamun",
-    description: "Soft milk dumplings in sugar syrup",
-    price: 149,
+    name: "Honey Soy Glazed Salmon",
+    description: "Pan-seared salmon glazed with honey and soy, finished with sesame seeds.",
+    image: "https://example.com/images/salmon-honey-soy.jpg",
+    price: 850,
+    category: "Seafood",
+    isAvailable: true
+  },
+  {
+    name: "Goan Prawn Curry",
+    description: "Traditional Goan curry cooked with prawns, coconut, and coastal spices.",
+    image: "https://example.com/images/goan-prawn-curry.jpg",
+    price: 620,
+    category: "Seafood",
+    isAvailable: true
+  },
+
+  // ===== DESSERTS =====
+  {
+    name: "Dark Chocolate Lava Cake",
+    description: "Warm chocolate cake with a molten center, served with vanilla ice cream.",
+    image: "https://example.com/images/lava-cake.jpg",
+    price: 320,
     category: "Desserts",
-    isAvailable: true,
+    isAvailable: true
   },
   {
-    name: "Chocolate Brownie",
-    description: "Warm chocolate brownie",
-    price: 229,
+    name: "Saffron Rasmalai Cheesecake",
+    description: "Fusion cheesecake inspired by classic rasmalai, infused with saffron.",
+    image: "https://example.com/images/rasmalai-cheesecake.jpg",
+    price: 360,
     category: "Desserts",
-    isAvailable: true,
+    isAvailable: true
   },
 
-  // Beverages
+  // ===== BEVERAGES =====
   {
-    name: "Masala Chai",
-    description: "Indian spiced tea with milk",
-    price: 89,
+    name: "Rose Lemonade",
+    description: "Refreshing lemonade infused with rose syrup and served chilled.",
+    image: "https://example.com/images/rose-lemonade.jpg",
+    price: 160,
     category: "Beverages",
-    isAvailable: true,
+    isAvailable: true
   },
   {
-    name: "Fresh Lime Soda",
-    description: "Refreshing lime soda",
-    price: 99,
+    name: "Espresso Martini",
+    description: "Classic espresso martini made with fresh espresso and premium vodka.",
+    image: "https://example.com/images/espresso-martini.jpg",
+    price: 420,
     category: "Beverages",
-    isAvailable: true,
-  },
+    isAvailable: true
+  }
 ];
 
-/* ---------------- SEED SCRIPT ---------------- */
-
-const seedMenu = async () => {
-  try {
-    await connectDB();
-    console.log("✅ Database connected");
-
-    // Clean only menu collection
-    await Menu.deleteMany({});
-    console.log("🗑️ Existing menu cleared");
-
-    // Attach images automatically
-    const finalMenu = menuItems.map((item) => ({
-      ...item,
-      image: imageByCategory(item.category),
-    }));
-
-    const inserted = await Menu.insertMany(finalMenu);
-    console.log(`🍽️ Seeded ${inserted.length} menu items`);
-
-    await mongoose.connection.close();
-    console.log("🔒 Database connection closed");
-    process.exit(0);
-  } catch (error) {
-    console.error("❌ Seeding failed:", error.message);
-    process.exit(1);
-  }
-};
-
-seedMenu();
+export default menuData;

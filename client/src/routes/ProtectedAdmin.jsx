@@ -1,7 +1,7 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const ProtectedAdmin = ({ children }) => {
+const ProtectedAdmin = () => {
   const accessToken = localStorage.getItem("accessToken");
 
   const { user, loading } = useSelector((state) => state.auth);
@@ -18,7 +18,7 @@ const ProtectedAdmin = ({ children }) => {
     return <Navigate to="/" replace />;
   }
 
-  return children;
+  return <Outlet />;
 };
 
 export default ProtectedAdmin;

@@ -4,7 +4,6 @@ import User from "../models/user.js";
 export const getTotalUsers = async (req, res, next) => {
   try {
     const users = await User.find().select("-password");
-    console.log(users); //!!!!!!!!!!!
 
     return res.status(200).json({
       success: true,

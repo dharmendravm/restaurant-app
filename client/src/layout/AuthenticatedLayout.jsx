@@ -4,6 +4,8 @@ import AppFooter from "../components/shared/Footer";
 import Navbar from "@/components/navbar/Navbar";
 
 const AuthenticatedLayout = () => {
+    // const userRole = useSelector((state) => state.auth?.user?.role);
+
   return (
     <div className="min-h-screen bg-app-bg text-text-main">
       <Navbar />

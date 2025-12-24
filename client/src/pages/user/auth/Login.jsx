@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,11 +24,22 @@ const Login = () => {
     password: "",
   });
 
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!user) return;
+
+    if (user.role === "admin") {
+      navigate("/admin", { replace: true });
+    } else {
+      navigate("/", { replace: true });
+    }
+  }, [user, navigate]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -37,7 +48,6 @@ const Login = () => {
       .unwrap()
       .then(() => {
         success("Welcome back", "You have logged in successfully.");
-        navigate("/");
         localStorage.removeItem("sessionToken");
       })
       .catch((errMsg) => {
@@ -46,6 +56,8 @@ const Login = () => {
           errMsg || "Something went wrong. Please try again."
         );
       });
+
+
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-app-bg text-text-main px-4 sm:px-6 py-6">
