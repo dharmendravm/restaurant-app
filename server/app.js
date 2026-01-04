@@ -10,13 +10,14 @@ import adminUserRoutes from "./router/admin/user.route.js";
 import adminTableRoutes from "./router/admin/table.route.js";
 
 import authRoutes from "./router/auth.route.js";
+import userRoute from './router/user.route.js'
 import sessionRoute from "./router/session.route.js";
 import tableRoute from "./router/table.route.js";
 import menuRoutes from "./router/menu.route.js";
 import orderRoute from './router/order.route.js';
 import cartRoute from "./router/cart.route.js";
 import couponRoute from './router/coupen.route.js'
-import { errorHandler, notFound } from "./middlewares/errormiddleware.js";
+import { globalErrorHandler, notFound } from "./middlewares/errormiddleware.js";
 
 const app = express();
 
@@ -55,6 +56,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1", sessionRoute);
 app.use("/api/v1/tables", tableRoute);
 app.use('/api/v1' , menuRoutes);
+app.use('/api/v1/user', userRoute)
 app.use('/api/v1/orders', orderRoute);
 app.use('/api/v1/cart', cartRoute)
 app.use('/api/v1/coupons', couponRoute)
@@ -66,9 +68,9 @@ app.use('/api/v1/coupons', couponRoute)
 app.use(notFound);
 
 // Galobal Error Handler
-app.use(errorHandler);
+app.use(globalErrorHandler)
 
 // Server
-const server = app.listen(PORT , "0.0.0.0", () => {
-  console.log(`Server is Running on Port: 0.0.0.0 : ${PORT}"`);
+app.listen(PORT , "0.0.0.0", () => {
+  console.log(`Server is Running on Port: ${PORT}"`);
 });

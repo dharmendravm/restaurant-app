@@ -6,6 +6,7 @@ import {
   Users,
   Settings,
   Table,
+  X,
 } from "lucide-react";
 
 const menu = [
@@ -17,41 +18,60 @@ const menu = [
   { name: "Settings", to: "/admin/settings", icon: Settings },
 ];
 
-const AdminSidebar = () => {
+const AdminSidebar = ({ open, onClose }) => {
   return (
-    <aside className="w-60 border-r border-border bg-card-bg/50 flex flex-col">
-      {/* Top */}
-      <div className="px-4 py-4 text-xs font-semibold text-text-muted  uppercase">
-        Navigation
-      </div>
-      {/* Menu */}
-      <nav className="flex-1 px-2 space-y-1">
-        {menu.map(({ name, to, icon: Icon }) => (
-          <NavLink
-            key={name}
-            to={to}
-            className={({ isActive }) =>
-              `
-              flex items-center gap-3 px-3 py-2 rounded-xl text-sm
-              transition
-              ${
-                isActive
-                  ? "bg-hover text-text-main font-medium"
-                  : "text-text-muted hover:bg-hover"
-              }
-            `
-            }
-          >
-            <Icon className="w-4 h-4" />
-            {name}
-          </NavLink>
-        ))}
-      </nav>
+    <>
+      {/* Overlay */}
+      {open && (
+        <div
+          onClick={onClose}
+          className="fixed inset-0 bg-black/40 z-30 md:hidden"
+        />
+      )}
 
-      <div className="p-3 border-t border-border text-xs text-text-muted">
-        © Admin
-      </div>
-    </aside>
+      {/* Sidebar */}
+      <aside
+        className={`fixed md:static inset-y-0 left-0 z-40 w-60 bg-card-bg border-r border-border flex flex-col transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
+      >
+        {/* Close (mobile) */}
+        <div className="md:hidden flex justify-end p-2">
+          <button onClick={onClose}>
+            <X />
+          </button>
+        </div>
+
+        <div className="px-4 py-4 text-xs font-semibold text-text-muted uppercase">
+          Navigation
+        </div>
+
+        <nav className="flex-1 px-2 space-y-1">
+          {menu.map(({ name, to, icon: Icon }) => (
+            <NavLink
+              key={name}
+              to={to}
+              onClick={onClose}
+              className={({ isActive }) =>
+                `
+                flex items-center gap-3 px-3 py-2 rounded-xl text-sm transition
+                ${
+                  isActive
+                    ? "bg-hover text-text-main font-medium"
+                    : "text-text-muted hover:bg-hover"
+                }
+              `
+              }
+            >
+              <Icon className="w-4 h-4" />
+              {name}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="p-3 border-t border-border text-xs text-text-muted">
+          © Admin
+        </div>
+      </aside>
+    </>
   );
 };
 

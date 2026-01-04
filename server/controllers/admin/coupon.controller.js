@@ -1,6 +1,6 @@
 import Coupon from "../../models/coupon.js";
 
-export const registerCoupon = async (req, res) => {
+export const registerCoupon = async (req, res, next) => {
   try {
     const {
       code,
@@ -15,9 +15,7 @@ export const registerCoupon = async (req, res) => {
     } = req.body;
 
     if (!code || !discountType || !discountValue) {
-      return res
-        .status(400)
-        .json({ message: "Code and discountType are required" });
+      return next(new AppError("Code and discountType are required", 400));
     }
 
     const existingCoupon = await Coupon.findOne({ code: code.toUpperCase() });
@@ -34,7 +32,7 @@ export const registerCoupon = async (req, res) => {
 
       usageLimit: usageLimit || null,
       minOrderAmount: minOrderAmount || 0,
-      discountValue : discountValue || 0,
+      discountValue: discountValue || 0,
 
       description: description || "",
       isActive: true,
@@ -48,7 +46,6 @@ export const registerCoupon = async (req, res) => {
       coupan: savedCoupon,
     });
   } catch (error) {
-    console.error("Error registering coupon:", error);
-    res.status(500).json({ message: "Server error" });
+    next(error);
   }
 };

@@ -4,15 +4,14 @@ import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import resetPasswordTemplate from "../services/emailtemplates/resetPasswordTemplate.js";
 import transporter from "../services/emailService.js";
+import AppError from "../utils/appError.js";
 
 export const forgotPassword = async (req, res, next) => {
   try {
     const { email } = req.body;
 
     if (!email) {
-      const err = new Error("Email is required");
-      err.statusCode = 400;
-      throw err;
+      return next(new AppError("Email is required", 400));
     }
 
     const user = await User.findOne({ email: email.toLowerCase() });
@@ -61,15 +60,11 @@ export const resetPassword = async (req, res, next) => {
     const { password, confirmPassword } = req.body;
 
     if (!token || !password) {
-      const error = new Error("Token and password are required");
-      error.statusCode = 400;
-      throw error;
+      return next(new AppError("Token and password are required", 400));
     }
 
     if (password !== confirmPassword) {
-      const err = new Error("Passwords do not match");
-      err.statusCode = 400;
-      throw err;
+      return next(new AppError("Passwords do not match", 400));
     }
 
     const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
@@ -80,9 +75,7 @@ export const resetPassword = async (req, res, next) => {
     });
 
     if (!user) {
-      const err = new Error("Invalid or expired reset token");
-      err.statusCode = 400;
-      throw err;
+      return next(new AppError("Invalid or expired reset token", 400));
     }
 
     const salt = await bcrypt.genSalt(10);

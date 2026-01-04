@@ -1,4 +1,5 @@
 import Table from "../models/table.js";
+import AppError from "../utils/appError.js";
 
 // GET TABLE BY SLUG
 export const getTableBySlug = async (req, res, next) => {
@@ -11,9 +12,7 @@ export const getTableBySlug = async (req, res, next) => {
     });
 
     if (!table) {
-      const error = new Error("No table found with this slug");
-      error.statusCode = 404;
-      throw error;
+       return next(new AppError("No table found with this slug", 404));
     }
 
     res.status(200).json({

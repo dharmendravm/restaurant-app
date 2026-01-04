@@ -9,9 +9,12 @@ export const NODE_ENV = process.env.NODE_ENV || "development";
 export const MAIL_USER = process.env.MAIL_USER;
 export const APP_PASSWORD = process.env.APP_PASSWORD;
 
-export const CLOUD_NAME = process.env.CLOUD_NAME;
-export const CLOUD_API_KEY = process.env.CLOUD_API_KEY;
-export const CLOUD_API_SECRET = process.env.CLOUD_API_SECRET;
+export const CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
+export const CLOUD_API_KEY = process.env.CLOUDINARY_API_KEY;
+export const CLOUD_API_SECRET = process.env.CLOUDINARY_API_SECRET;
+
+export const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID;
+export const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
 
 export const JWT_SECRET = process.env.JWT_SECRET;
 export const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;

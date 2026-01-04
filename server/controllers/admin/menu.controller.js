@@ -4,9 +4,7 @@ import Menu from "../../models/menu.js";
 export const createMenu = async (req, res, next) => {
   try {
     if (!req.file) {
-      const error = new Error("Image is required");
-      error.statusCode = 400;
-      throw error;
+      return next(new AppError("Image is required", 400));
     }
 
     const filePath = req.file.path;

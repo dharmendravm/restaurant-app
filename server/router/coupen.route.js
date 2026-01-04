@@ -1,9 +1,9 @@
 import express from "express";
-import { applyCoupon } from "../controllers/coupon.controller.js";
+import { getAllCouponsAndApply } from "../controllers/coupon.controller.js";
 import { verifyToken } from "../middlewares/verifyToken.js";
 
 const router = express.Router();
 
-router.get("/apply", verifyToken, applyCoupon)
+router.get("/apply", verifyToken, getAllCouponsAndApply);
 
 export default router;

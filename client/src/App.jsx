@@ -19,7 +19,8 @@ import ProtectedAdmin from "./routes/ProtectedAdmin";
 import AdminLayout from "./layout/AdminLayout";
 import Dashboard from "./pages/admin/dashboard/Dashboard";
 import UsersPage from "./pages/admin/users/UserPage";
-import TablesPage from './pages/admin/tables/TablesPage';
+import TablesPage from "./pages/admin/tables/TablesPage";
+import Users from "./pages/admin/orders/Orders";
 
 function App() {
   return (
@@ -33,14 +34,15 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/recovery" element={<ForgotPassword />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
+            <Route path="/users" element={<Users />} />
           </Route>
 
           {/* Protected Routes with main app layout */}
           <Route element={<ProtectedRoutes />}>
             <Route element={<AuthenticatedLayout />}>
               <Route path="/" element={<HomePage />} />
-              <Route path="/user/profile" element={<UserProfile />} />
               <Route path="/user/cart" element={<CartPage />} />
+              <Route path="/user/profile" element={<UserProfile />} />
             </Route>
           </Route>
 

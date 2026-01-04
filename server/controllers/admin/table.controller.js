@@ -9,9 +9,7 @@ export const registerTable = async (req, res, next) => {
     const { tableNumber, capacity } = req.body;
 
     if (!tableNumber || !capacity) {
-      const error = new Error("Table number and capacity are required");
-      error.statusCode = 400;
-      throw error;
+      return next(new AppError("Table number and capacity are required", 400));
     }
 
     // Generate unique QR slug
@@ -52,15 +50,12 @@ export const registerTable = async (req, res, next) => {
   }
 };
 
-
 export const getAllTables = async (_req, res, next) => {
   try {
     const tables = await Table.find();
 
     if (!tables.length) {
-      const error = new Error("No tables found");
-      error.statusCode = 404;
-      throw error;
+      return next(new AppError("No tables found", 404));
     }
 
     res.status(200).json({
@@ -68,6 +63,19 @@ export const getAllTables = async (_req, res, next) => {
       count: tables.length,
       data: tables,
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const toggleTableStatus = async (req, res, next) => {
+  try {
+    const table = await Table.findById(req.params.id);
+
+    table.isActive = !table.isActive;
+    await table.save();
+
+    res.json({ success: true, id: table._id, isActive: table.isActive });
   } catch (error) {
     next(error);
   }

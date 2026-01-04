@@ -1,13 +1,12 @@
 import User from "../models/user.js";
+import AppError from "../utils/appError.js";
 
 // Get profile by token
 export const getUserByToken = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
     if (!user) {
-      const error = new Error("User not found");
-      error.status = 404;
-      throw error;
+      return next(new AppError("User not found", 404));
     }
     res.status(200).json({
       success: true,
@@ -18,8 +17,6 @@ export const getUserByToken = async (req, res, next) => {
     next(error);
   }
 };
-
-
 
 // Update user
 export const updateUser = async (req, res, next) => {
@@ -35,16 +32,12 @@ export const updateUser = async (req, res, next) => {
       updatedData.email = email.toLowerCase();
     }
 
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      updatedData,
-      { new: true  /*runValidators: true*/ }
-    ).select("-password -refreshToken");
+    const user = await User.findByIdAndUpdate(req.params.id, updatedData, {
+      new: true /*runValidators: true*/,
+    }).select("-password -refreshToken");
 
     if (!user) {
-      const error = new Error("User not found");
-      error.status = 404;
-      throw error;
+      return next(new AppError("User not found", 404));
     }
 
     res.status(200).json({
@@ -67,9 +60,7 @@ export const deactivateUser = async (req, res, next) => {
     ).select("-password -refreshToken");
 
     if (!user) {
-      const error = new Error("User not found");
-      error.status = 404;
-      throw error;
+      return next(new AppError("User not found", 404));
     }
 
     res.status(200).json({
@@ -88,9 +79,7 @@ export const deleteUser = async (req, res, next) => {
     const deleted = await User.findByIdAndDelete(req.params.id);
 
     if (!deleted) {
-      const error = new Error("User not found");
-      error.status = 404;
-      throw error;
+      return next(new AppError("User not found", 404));
     }
     res.status(200).json({
       success: true,

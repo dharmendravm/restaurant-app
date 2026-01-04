@@ -1,6 +1,5 @@
 import api from "@/lib/api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -18,7 +17,7 @@ export const getCartThunk = createAsyncThunk(
     try {
       const accessToken = requireAuthToken(thunkApi);
 
-      const res = await axios.get(`${API_URL}/api/v1/cart`, {
+      const res = await api.get("cart", {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       return res.data.cart;
@@ -38,9 +37,10 @@ export const addToCartThunk = createAsyncThunk(
       const accessToken = requireAuthToken(thunkApi);
 
       const res = await api.post(
-        `${API_URL}/api/v1/cart/add`,
+        "cart/add",
         {
-          menuItemId, quantity,
+          menuItemId,
+          quantity,
         },
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
@@ -60,8 +60,8 @@ export const increaseQtyCartThunk = createAsyncThunk(
     try {
       const accessToken = requireAuthToken(thunkApi);
 
-      const res = await axios.patch(
-        `${API_URL}/api/v1/cart/increase`,
+      const res = await api.patch(
+        'cart/increase',
         { menuItemId },
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
@@ -83,9 +83,9 @@ export const decreaseQtyCartThunk = createAsyncThunk(
     try {
       const accessToken = requireAuthToken(thunkApi);
 
-      const res = await axios.patch(
-        `${API_URL}/api/v1/cart/decrease`,
-        { menuItemId},
+      const res = await api.patch(
+        'cart/decrease',
+        { menuItemId },
         { headers: { Authorization: `Bearer ${accessToken}` } }
       );
       return res.data.cart;
@@ -106,7 +106,7 @@ export const removeItemCartThunk = createAsyncThunk(
     try {
       const accessToken = requireAuthToken(thunkApi);
 
-      const res = await axios.delete(`${API_URL}/api/v1/cart/remove`, {
+      const res = await api.delete('cart/remove', {
         data: { menuItemId },
         headers: { Authorization: `Bearer ${accessToken}` },
       });
@@ -129,7 +129,7 @@ export const clearCartThunk = createAsyncThunk(
     try {
       const accessToken = requireAuthToken(thunkApi);
 
-      await axios.delete(`${API_URL}/api/v1/cart/clear`, {
+      await api.delete('cart/clear', {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
@@ -142,7 +142,7 @@ export const clearCartThunk = createAsyncThunk(
   }
 );
 
-// SLICE 
+// SLICE
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
