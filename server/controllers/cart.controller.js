@@ -1,8 +1,7 @@
 import Cart from "../models/cart.js";
 import Menu from "../models/menu.js";
 import AppError from "../utils/appError.js";
-
-// ---------------- HELPERS ----------------
+// HELPERS
 
 // Find cart by user
 const findCart = async (userId) => {
@@ -29,7 +28,7 @@ const updateTotalPrice = async (cart) => {
   await cart.save();
 };
 
-// ---------------- ADD TO CART ----------------
+// ADD TO CART
 export const addToCart = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -68,7 +67,7 @@ export const addToCart = async (req, res, next) => {
   }
 };
 
-// ---------------- GET CART ----------------
+// GET CART
 export const getCart = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -95,7 +94,7 @@ export const getCart = async (req, res, next) => {
   }
 };
 
-// ---------------- INCREASE QTY ----------------
+// INCREASE QTY
 export const increaseQty = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -109,11 +108,7 @@ export const increaseQty = async (req, res, next) => {
     const item = cart.items.find((i) => i.menuItemId.toString() === menuItemId);
 
     if (!item) {
-            return next(new AppError("Item not found", 400));
-
-      const error = new Error("Item not found");
-      error.statusCode = 404;
-      throw error;
+      return next(new AppError("Item not found", 400));
     }
 
     item.quantity += 1;
@@ -129,7 +124,7 @@ export const increaseQty = async (req, res, next) => {
   }
 };
 
-// ---------------- DECREASE QTY ----------------
+// DECREASE QTY
 export const decreaseQty = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -145,9 +140,7 @@ export const decreaseQty = async (req, res, next) => {
     const item = cart.items.find((i) => i.menuItemId.toString() === menuItemId);
 
     if (!item) {
-      const error = new Error("Item not found");
-      error.statusCode = 404;
-      throw error;
+      return next(new AppError("Item not found", 404));
     }
 
     item.quantity -= 1;
@@ -170,7 +163,7 @@ export const decreaseQty = async (req, res, next) => {
   }
 };
 
-// ---------------- REMOVE ITEM ----------------
+// REMOVE ITEM
 export const removeItem = async (req, res, next) => {
   try {
     const userId = req.user.id;
@@ -178,9 +171,7 @@ export const removeItem = async (req, res, next) => {
 
     const cart = await findCart(userId);
     if (!cart) {
-      const error = new Error("Cart not found");
-      error.statusCode = 404;
-      throw error;
+      return next(new AppError("Cart not found", 404));
     }
 
     cart.items = cart.items.filter(
@@ -199,16 +190,14 @@ export const removeItem = async (req, res, next) => {
   }
 };
 
-// ---------------- CLEAR CART ----------------
+// CLEAR CART
 export const clearCart = async (req, res, next) => {
   try {
     const userId = req.user.id;
 
     const cart = await findCart(userId);
     if (!cart) {
-      const error = new Error("Cart not found");
-      error.statusCode = 404;
-      throw error;
+      return next(new AppError("Cart not found", 404));
     }
 
     cart.items = [];

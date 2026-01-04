@@ -1,6 +1,7 @@
 import Session from "../models/session.js";
 import Table from "../models/table.js";
 import crypto from "crypto";
+import AppError from "../utils/appError.js";
 
 const SESSION_EXPIRY_HOURS = 24;
 
@@ -9,17 +10,13 @@ export const session = async (req, res, next) => {
     const { deviceId, qrSlug } = req.body;
 
     if (!deviceId || !qrSlug) {
-      const error = new Error("deviceId and qrSlug not found");
-      error.statusCode = 400;
-      throw error;
+      return next(new AppError("deviceId and qrSlug not found", 404));
     }
 
     const table = await Table.findOne({ qrSlug });
 
     if (!table) {
-      const error = new Error("No active table found for this QR slug");
-      error.statusCode = 404;
-      throw error;
+      return next(new AppError("No active table found for this QR slug", 404));
     }
 
     const tableNumber = table.tableNumber;
@@ -27,7 +24,7 @@ export const session = async (req, res, next) => {
     const sessionToken = crypto.randomBytes(32).toString("hex");
 
     const expiresAt = new Date();
-    expiresAt.setHours(expiresAt.getHours() +  SESSION_EXPIRY_HOURS);
+    expiresAt.setHours(expiresAt.getHours() + SESSION_EXPIRY_HOURS);
 
     const newSession = new Session({
       deviceId,

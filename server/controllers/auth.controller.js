@@ -121,29 +121,26 @@ export const refresh = async (req, res, next) => {
     const { refreshToken } = req.body;
 
     if (!refreshToken) {
-      return next({ statusCode: 400, message: "Refresh token missing" });
+      return next(new AppError("Refresh token missing", 400));
     }
 
     let decoded;
     try {
       decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
     } catch {
-      return next({
-        statusCode: 401,
-        message: "Invalid or expired refresh token",
-      });
+      return next(new AppError("Invalid or expired refresh token", 401));
     }
 
     const user = await User.findById(decoded.id);
     if (!user || user.refreshToken !== refreshToken) {
-      return next({ statusCode: 401, message: "Unauthorized" });
+      return next(new AppError("Unauthorized", 401));
     }
 
     if (
       !user.refreshTokenExpiresAt ||
       user.refreshTokenExpiresAt.getTime() < Date.now()
     ) {
-      return next({ statusCode: 401, message: "Refresh token expired" });
+      return next(new AppError("Refresh token expired", 401));
     }
 
     const accessToken = generateAccessToken({
@@ -155,6 +152,6 @@ export const refresh = async (req, res, next) => {
 
     res.json({ accessToken });
   } catch (error) {
-    return next({ statusCode: 500, message: error.message });
+    next(error);
   }
 };

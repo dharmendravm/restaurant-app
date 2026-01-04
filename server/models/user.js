@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
   },
   phone: {
     type: Number,
+    required: true,
   },
   password: {
     type: String,
@@ -23,17 +24,21 @@ const UserSchema = new mongoose.Schema({
     enum: ["customer", "admin"],
     default: "customer",
   },
-  totolSpends: {
-    type: Number,
-  },
   totalOrders: {
     type: Number,
+    default: 0,
+  },
+  totalSpends: {
+    type: Number,
+    default: 0,
   },
   loyalPoints: {
-    type: Number, // Loyalty Points
+    type: Number,
+    default: 0,
   },
   isActive: {
     type: Boolean,
+    default: true,
   },
   refreshToken: {
     type: String,

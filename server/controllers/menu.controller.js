@@ -1,4 +1,5 @@
 import Menu from "../models/menu.js";
+import AppError from "../utils/appError.js";
 
 export const getAllMenuItems = async (req, res, next) => {
   try {

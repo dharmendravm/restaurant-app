@@ -21,6 +21,7 @@ export const getAllTables = createAsyncThunk(
   }
 );
 
+
 const tableSlice = createSlice({
   name: "table",
   initialState: {
@@ -29,7 +30,15 @@ const tableSlice = createSlice({
     error: null,
   },
 
-  reducers: {},
+  reducers: {
+    toggleTableLocal : (state, action) => {
+      const { id, isActive } = action.payload
+      const table = state.tables.find(t => t._id === id)
+      if(table){
+        table.isActive = isActive
+      }
+    }
+  },
 
   extraReducers: (builder) => {
     builder
@@ -50,4 +59,6 @@ const tableSlice = createSlice({
   },
 });
 
+export const { toggleTableLocal } = tableSlice.actions;
 export default tableSlice.reducer;
+ 

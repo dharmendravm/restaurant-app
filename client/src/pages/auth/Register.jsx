@@ -51,7 +51,7 @@ const Register = () => {
           "Account created",
           "Welcome to TableOrbit! Your account is ready."
         );
-        navigate("/");
+        navigate("/login");
       })
       .catch((err) => {
         toastError(

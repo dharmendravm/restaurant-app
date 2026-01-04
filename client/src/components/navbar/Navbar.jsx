@@ -78,7 +78,7 @@ const Navbar = () => {
             <li>
               <Link
                 to="/"
-                className="flex items-center gap-2 rounded-full px-3 py-1 text-text-main hover:bg-hover hover:text-brand-main transition"
+                className="flex items-center gap-2 rounded-full px-3 py-1 text-text-main hover:bg-hover hover:text-brand-main transition border border-border"
               >
                 <Home className="w-5 h-5 " />
                 Home
@@ -308,7 +308,7 @@ const MenuItem = ({ icon: Icon, label, to, active }) => {
   const content = (
     <div className={`${base} ${active ? activeStyle : inactiveStyle}`}>
       {active && (
-        <span className="absolute left-0 h-full w-[3px] bg-brand-main rounded-r" />
+        <span className="absolute left-0 h-full w-0.75 bg-brand-main rounded-r" />
       )}
       <Icon className="w-4 h-4" />
       <span>{label}</span>
