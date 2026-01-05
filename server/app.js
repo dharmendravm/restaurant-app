@@ -24,33 +24,10 @@ const app = express();
 // Middlewares
 app.use(express.json());
 
-// CORS
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "http://192.168.1.5:5173",
-];
-
-if (FRONTEND_URL) {
-  allowedOrigins.push(FRONTEND_URL);
-}
-
+// CORS (open for all origins - for production lock down later)
 app.use(
   cors({
-    origin(origin, callback) {
-      // allow non-browser / same-origin requests
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      if (NODE_ENV === "development") {
-        console.warn("[CORS] Blocked origin:", origin);
-      }
-
-      return callback(new Error("Not allowed by CORS"));
-    },
+    origin: true, // reflect request origin
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
