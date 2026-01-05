@@ -10,13 +10,13 @@ import adminUserRoutes from "./router/admin/user.route.js";
 import adminTableRoutes from "./router/admin/table.route.js";
 
 import authRoutes from "./router/auth.route.js";
-import userRoute from './router/user.route.js'
+import userRoute from "./router/user.route.js";
 import sessionRoute from "./router/session.route.js";
 import tableRoute from "./router/table.route.js";
 import menuRoutes from "./router/menu.route.js";
-import orderRoute from './router/order.route.js';
+import orderRoute from "./router/order.route.js";
 import cartRoute from "./router/cart.route.js";
-import couponRoute from './router/coupen.route.js'
+import couponRoute from "./router/coupen.route.js";
 import { globalErrorHandler, notFound } from "./middlewares/errormiddleware.js";
 
 const app = express();
@@ -24,7 +24,6 @@ const app = express();
 // Middlewares
 app.use(express.json());
 
-app.use(cors());
 // CORS
 app.use(
   cors({
@@ -32,10 +31,14 @@ app.use(
       "http://localhost:5173",
       "http://localhost:5174",
       "https://restaurant-app-gold-three.vercel.app",
-      "http://192.168.1.5:5173"
+      "http://192.168.1.5:5173",
     ],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
+
 
 // DB Connect
 await ConnectDB();
@@ -46,20 +49,20 @@ app.get("/", (req, res) => {
 });
 
 // Admin Routes
-app.use('/api/v1/admin/users', adminUserRoutes);
-app.use('/api/v1/admin/coupons', adminCouponRoutes);
-app.use('/api/v1/admin/menu', adminMenuRoutes);
-app.use('/api/v1/admin/tables', adminTableRoutes);
+app.use("/api/v1/admin/users", adminUserRoutes);
+app.use("/api/v1/admin/coupons", adminCouponRoutes);
+app.use("/api/v1/admin/menu", adminMenuRoutes);
+app.use("/api/v1/admin/tables", adminTableRoutes);
 
 // Api Routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1", sessionRoute);
 app.use("/api/v1/tables", tableRoute);
-app.use('/api/v1' , menuRoutes);
-app.use('/api/v1/user', userRoute)
-app.use('/api/v1/orders', orderRoute);
-app.use('/api/v1/cart', cartRoute)
-app.use('/api/v1/coupons', couponRoute)
+app.use("/api/v1", menuRoutes);
+app.use("/api/v1/user", userRoute);
+app.use("/api/v1/orders", orderRoute);
+app.use("/api/v1/cart", cartRoute);
+app.use("/api/v1/coupons", couponRoute);
 
 // User Routes
 // app.use("/api/v1", getTotalUsers);
@@ -68,9 +71,9 @@ app.use('/api/v1/coupons', couponRoute)
 app.use(notFound);
 
 // Galobal Error Handler
-app.use(globalErrorHandler)
+app.use(globalErrorHandler);
 
 // Server
-app.listen(PORT , "0.0.0.0", () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is Running on Port: ${PORT}"`);
 });
