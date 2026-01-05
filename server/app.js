@@ -90,7 +90,12 @@ app.use(notFound);
 // Galobal Error Handler
 app.use(globalErrorHandler);
 
-// Server
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server is Running on Port: ${PORT}"`);
-});
+// Export Express app for serverless (Vercel)
+export default app;
+
+// Start HTTP server only in non-Vercel (local/dev) environments
+if (!process.env.VERCEL) {
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server is Running on Port: ${PORT}"`);
+  });
+}
