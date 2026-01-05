@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import "./globallogs.js";
-import { PORT } from "./config.js";
+import { PORT, FRONTEND_URL, NODE_ENV } from "./config.js";
 import ConnectDB from "./config/database.js";
 
 import adminMenuRoutes from "./router/admin/menu.route.js";
@@ -25,20 +25,37 @@ const app = express();
 app.use(express.json());
 
 // CORS
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://192.168.1.5:5173",
+];
+
+if (FRONTEND_URL) {
+  allowedOrigins.push(FRONTEND_URL);
+}
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5174",
-      "https://restaurant-app-gold-three.vercel.app",
-      "http://192.168.1.5:5173",
-    ],
+    origin(origin, callback) {
+      // allow non-browser / same-origin requests
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      if (NODE_ENV === "development") {
+        console.warn("[CORS] Blocked origin:", origin);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
-
 
 // DB Connect
 await ConnectDB();
