@@ -7,12 +7,14 @@ import {
   Settings,
   Table,
   X,
+  TicketPercent,
 } from "lucide-react";
 
 const menu = [
   { name: "Dashboard", to: "/admin", icon: LayoutDashboard },
   { name: "Orders", to: "/admin/orders", icon: ShoppingCart },
-  { name: "Menu", to: "/admin/menu", icon: UtensilsCrossed },
+  { name: "Menu", to: "/admin/create/menu", icon: UtensilsCrossed },
+  { name: "Coupon", to: "/admin/create/coupon", icon: TicketPercent },
   { name: "Tables", to: "/admin/tables", icon: Table },
   { name: "Users", to: "/admin/users", icon: Users },
   { name: "Settings", to: "/admin/settings", icon: Settings },

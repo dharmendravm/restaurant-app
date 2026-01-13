@@ -65,7 +65,7 @@ const MenuCard = memo(({ item }) => {
 });
 
 // MenuSection
-const MenuSection = () => {
+const MenuSection = ({ isAdmin = false }) => {
   const dispatch = useDispatch();
   const { menuItems, categories, selectedCategory } = useSelector(
     (state) => state.menu
@@ -78,15 +78,17 @@ const MenuSection = () => {
   return (
     <section id="menu-section" className="space-y-8 pt-12">
       {/* Title */}
-      <div>
-        <h2 className="text-2xl md:text-3xl font-extrabold text-text-main tracking-tight">
-          Our Signature Dishes
-        </h2>
-        <p className="text-sm text-text-muted max-w-md mt-1">
-          From classic favorites to modern culinary creations, each dish is made
-          with fresh ingredients & an extra dash of love.
-        </p>
-      </div>
+      {!isAdmin && (
+        <div>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-text-main tracking-tight">
+            Our Signature Dishes
+          </h2>
+          <p className="text-sm text-text-muted max-w-md mt-1">
+            From classic favorites to modern culinary creations, each dish is
+            made with fresh ingredients & an extra dash of love.
+          </p>
+        </div>
+      )}
 
       {/* Category Filters */}
       <div className="flex flex-wrap gap-2">

@@ -4,8 +4,9 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import transporter from "../services/emailService.js";
 import registerTemplate from "../services/emailtemplates/registerTemplate.js";
-import { MAIL_USER, REFRESH_TOKEN_SECRET } from "../config.js";
+import { FRONTEND_URL, MAIL_USER, REFRESH_TOKEN_SECRET } from "../config.js";
 import AppError from "../utils/appError.js";
+import admin from "../config/firebaseAdmin.js";
 
 // Register new user
 export const register = async (req, res, next) => {
@@ -70,7 +71,9 @@ export const login = async (req, res, next) => {
       return next(new AppError("Email and password are required", 400));
     }
     // Check user exists
-    const user = await User.findOne({ email: email.toLowerCase() });
+    const user = await User.findOne({ email: email.toLowerCase() }).select(
+      "+password"
+    );
 
     if (!user) {
       return next(new AppError("Invalid email or password", 400));

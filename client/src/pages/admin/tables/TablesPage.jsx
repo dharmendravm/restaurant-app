@@ -52,7 +52,7 @@ const TablesPage = () => {
                     <td>{table.tableNumber}</td>
                     <td className="font-mono text-xs">
                       <span
-                        className=" inline-flex items-center px-2 py-0.5 rounded-md font-mono text-[11px] font-medium bg-(--color-hover) text-text-muted border border-border cursor-pointer hover:bg-brand-fade hover:text-(--color-text-main) transition-colors"
+                        className=" inline-flex items-center px-2 py-0.5 rounded-md font-mono text-[11px] font-medium bg-hover text-text-muted border border-border cursor-pointer hover:bg-brand-fade hover:text-(--color-text-main) transition-colors"
                         title={table.qrSlug}
                       >
                         {table.qrSlug}

@@ -18,9 +18,9 @@ app.use(
       "http://localhost:5173",
       "http://localhost:5174",
       "https://restaurant-app-gold-three.vercel.app",
-      "http://192.168.1.5:5173"
+      "http://192.168.1.5:5173",
     ],
-    
+
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "x-session-token"],
   })
@@ -32,20 +32,10 @@ app.get("/", (req, res) => {
   res.send("Server is Live");
 });
 
-// 🌐 ALL API ROUTES
 app.use("/api/v1", apiRoutes);
-
-// User Routes
-// app.use("/api/v1", getTotalUsers);
-
 app.use(notFound);
-
 app.use(globalErrorHandler);
 
-export default app;
-
-if (!process.env.VERCEL) {
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server is Running on Port: ${PORT}"`);
-  });
-}
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server is Running on Port: ${PORT}"`);
+});

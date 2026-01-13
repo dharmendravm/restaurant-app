@@ -33,6 +33,33 @@ export const register = createAsyncThunk(
   }
 );
 
+export const googleLogin = createAsyncThunk(
+  "/oauth/google",
+  async (idToken, thunkApi) => {
+    try {
+      const res = await api.post("oauth/google/verify", { idToken });
+      return res.data;
+    } catch (error) {
+      const message =
+        error?.response?.data?.message || error?.message || "Server error";
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+export const githubLogin = createAsyncThunk(
+  "/oauth/github",
+  async (idToken, thunkApi) => {
+    try {
+      const res = await api.post("oauth/github/verify", { idToken });
+      return res.data;
+    } catch (error) {
+      const message =
+        error?.response?.data?.message || error?.message || "Server error";
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+
 // LocalStorage
 const setAuthToLocalStorage = (payload) => {
   const { data, accessToken, refreshToken } = payload;
@@ -56,6 +83,8 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     loading: false,
+    googleLoading: false,
+    githubLoading: false,
     error: null,
 
     user: storedUser ? JSON.parse(storedUser) : null,
@@ -76,35 +105,23 @@ const authSlice = createSlice({
   },
 
   extraReducers: (builder) => {
+    builder.addCase(login.fulfilled, (state, action) => {
+      const { data, accessToken, refreshToken } = action.payload;
+
+      setAuthToLocalStorage(action.payload);
+
+      state.user = {
+        id: data._id,
+        name: data.name,
+        email: data.email,
+        role: data.role,
+      };
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+      state.loading = false;
+    });
+
     builder
-      .addCase(login.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(login.fulfilled, (state, action) => {
-        const { data, accessToken, refreshToken } = action.payload;
-
-        setAuthToLocalStorage(action.payload);
-
-        state.user = {
-          id: data._id,
-          name: data.name,
-          email: data.email,
-          role: data.role,
-        };
-        state.accessToken = accessToken;
-        state.refreshToken = refreshToken;
-        state.loading = false;
-      })
-      .addCase(login.rejected, (state, action) => {
-        console.log(action.payload);
-
-        state.error = action.payload || "Internet or Server error";
-        state.loading = false;
-      });
-    builder
-      .addCase(register.pending, (state) => {
-        state.loading = true;
-      })
       .addCase(register.fulfilled, (state, action) => {
         const { data, accessToken, refreshToken } = action.payload;
 
@@ -121,12 +138,74 @@ const authSlice = createSlice({
         state.refreshToken = refreshToken;
         state.loading = false;
       })
-      .addCase(register.rejected, (state, action) => {
-        console.log(action.payload);
 
+      // GOOGLE CASE
+      .addCase(googleLogin.pending, (state) => {
+        state.googleLoading = true;
+        state.error = null;
+      })
+      .addCase(googleLogin.fulfilled, (state, action) => {
+        const { data, accessToken, refreshToken } = action.payload;
+
+        setAuthToLocalStorage(action.payload);
+
+        state.user = {
+          id: data._id,
+          name: data.name,
+          email: data.email,
+          role: data.role,
+        };
+        state.accessToken = accessToken;
+        state.refreshToken = refreshToken;
+        state.googleLoading = false;
+      })
+      .addCase(googleLogin.rejected, (state, action) => {
+        state.googleLoading = false;
         state.error = action.payload;
-        state.loading = false;
-      });
+      })
+
+      // GITHUB CASE
+      .addCase(githubLogin.pending, (state) => {
+        state.githubLoading = true;
+        state.error = null;
+      })
+      .addCase(githubLogin.fulfilled, (state, action) => {
+        const { data, accessToken, refreshToken } = action.payload;
+
+        setAuthToLocalStorage(action.payload);
+
+        state.user = {
+          id: data._id,
+          name: data.name,
+          email: data.email,
+          role: data.role,
+        };
+        state.accessToken = accessToken;
+        state.refreshToken = refreshToken;
+        state.githubLoading = false;
+      })
+      .addCase(githubLogin.rejected, (state, action) => {
+        state.githubLoading = false;
+        state.error = action.payload;
+      })
+
+      //
+      .addMatcher(
+        (action) =>
+          action.type.startsWith("/auth") && action.type.endsWith("/pending"),
+        (state) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addMatcher(
+        (action) =>
+          action.type.startsWith("/auth") && action.type.endsWith("/rejected"),
+        (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        }
+      );
   },
 });
 

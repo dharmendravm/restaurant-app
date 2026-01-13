@@ -1,6 +1,7 @@
 import express from "express";
 
 import authRoutes from "./auth.route.js";
+import ouathRoutes from '../router/oauth.route.js'
 import userRoute from "./user.route.js";
 import sessionRoute from "./session.route.js";
 import tableRoute from "./table.route.js";
@@ -18,6 +19,8 @@ router.use("/admin", adminRoutes);
 
 // MAIN ROUTES
 router.use("/auth", authRoutes);
+router.use("/oauth", ouathRoutes)
+
 router.use("/session", sessionRoute);
 router.use("/tables", tableRoute);
 router.use("/menu", menuRoutes);

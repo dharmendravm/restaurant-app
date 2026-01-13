@@ -6,12 +6,33 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    uniqe: true,
+    sparse: true,
+    lowercase: true,
+    trim: true,
   },
+  isEmailVerified: {
+    type: Boolean,
+    default: false,
+  },
+  
   phone: {
     type: Number,
-    required: true,
+    required: false,
   },
   password: {
+    type: String,
+    select: false,
+  },
+  avatar: {
+    type: String,
+  },
+  authProvider: {
+    type: String,
+    enum: ["LOCAL", "GOOGLE", "GITHUB"],
+    default: "LOCAL",
+  },
+  uid: {
     type: String,
   },
   accountType: {

@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "@/store/authSlice";
 import { Mail, Lock, ArrowRight, Gift, LogIn } from "lucide-react";
 import { BrandLogo } from "@/components/shared/BrandLogo";
-import { GoogleLoginUI } from "@/components/ui/GoogleUI";
+import { GoogleLoginUI } from "@/components/buttons/GoogleLoginButton";
 import { useToast } from "@/components/ui/toast";
 
 import AuthError from "@/components/auth/AuthError";
 import AuthInput from "@/components/auth/AuthInput";
 import AuthButton from "@/components/auth/AuthButton";
 import AuthAsideContent from "@/components/ui/AuthAsideContent";
+import { GitHubLoginUI } from "@/components/buttons/GithubLoginButton";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -56,8 +57,6 @@ const Login = () => {
           errMsg || "Something went wrong. Please try again."
         );
       });
-
-
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-app-bg text-text-main px-4 sm:px-6 py-6">
@@ -114,11 +113,13 @@ const Login = () => {
                     <LogIn className="w-5" />
                     Sign In
                   </AuthButton>
-
-                  {/* GOOGLE LOGIN */}
-                  <GoogleLoginUI />
+                  
+                  <div className="flex gap-2 flex-col sm:flex-row">
+                    <GoogleLoginUI />
+                    <GitHubLoginUI />
+                  </div>
                 </form>
-                
+
                 <div className="pt-2 text-center text-xs text-text-muted">
                   <p>
                     Don't have an account?{" "}

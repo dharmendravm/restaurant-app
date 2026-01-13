@@ -34,6 +34,7 @@ export const OrderSummary = () => {
 
   if (cartLoading) return <CartSkeleton />;
   if (loading) return <p>loading...</p>;
+  if(!coupons) return null;
   if (error) return <p className="text-sm text-red-500">{error}</p>;
 
   return (

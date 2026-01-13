@@ -14,6 +14,7 @@ import {
   Shield,
   ShoppingCart,
   UserPlus,
+  Search,
 } from "lucide-react";
 
 import ThemeToggle from "@/components/shared/ThemeToggle";
@@ -54,7 +55,7 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-40 flex justify-center w-full">
-      <nav className="w-full md:w-full rounded-b-md bg-blend-color backdrop-blur-xl px-4 md:px-6 py-2">
+      <nav className="w-full md:w-full rounded-b-md bg-card-bg border-b border-border px-4 md:px-6 py-1">
         <div className="flex items-center justify-between gap-4">
           {/* Brand */}
           <div className="flex items-center gap-2 sm:gap-3 group select-none">
@@ -74,39 +75,29 @@ const Navbar = () => {
           </div>
 
           {/* Desktop nav links */}
-          <ul className="hidden md:flex items-center gap-6 text-[12px] font-semibold">
-            <li>
-              <Link
-                to="/"
-                className="flex items-center gap-2 rounded-full px-3 py-1 text-text-main hover:bg-hover hover:text-brand-main transition border border-border"
-              >
-                <Home className="w-5 h-5 " />
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                onClick={scrollToMenu}
-                className="flex items-center gap-2 rounded-full px-3 py-1 text-text-main hover:bg-hover hover:text-brand-main transition"
-              >
-                <UtensilsCrossed className="w-5 h-5" />
-                Menu
-              </Link>
-            </li>
-
-            {displayRole === "admin" && (
-              <li>
-                <Link
-                  to="/admin"
-                  className="flex items-center gap-2 rounded-full px-3 py-1.5 bg-card-bg animate-pulse text-text-accent 
-                  hover:text-admin ease-in delay-150 duration-300 transition-all"
-                >
-                  <Shield className="w-5 h-5" />
-                  Admin
-                </Link>
-              </li>
-            )}
-          </ul>
+          <div className="hidden md:flex flex-1 max-w-md mx-8">
+            <div className="relative w-full">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-bg" />
+              <input
+                type="text"
+                placeholder="Search menu items..."
+                // value={localSearchQuery}
+                // onChange={handleSearchChange}
+                className="w-full pl-8 pr-4 py-1 bg-gray-800/50 border border-gray-700/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-gray-600 transition-colors placeholder:ml-3"
+              />
+              {/* {localSearchQuery && (
+                  <button
+                    // onClick={() => {
+                    //   setLocalSearchQuery('');
+                    //   dispatch(setSearchQuery(''));
+                    // }}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )} */}
+            </div>
+          </div>
 
           {/*Cart + theme + Profile + mobile toggle */}
           <div className="flex items-center gap-3">
@@ -203,6 +194,18 @@ const Navbar = () => {
                           <UserPlus className="w-4 h-4" />
                           <span>Register Now</span>
                         </Link>
+                      )}
+                      {displayRole === "admin" && (
+                        <li>
+                          <Link
+                            to="/admin"
+                            onClick={() => setIsProfileOpen(false)}
+                            className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-text-main hover:bg-hover rounded-xl transition"
+                          >
+                            <Shield className="w-4 h-4" />
+                            <span>Admin</span>
+                          </Link>
+                        </li>
                       )}
 
                       {isGuest && (
