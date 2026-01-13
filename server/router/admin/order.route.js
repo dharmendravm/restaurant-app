@@ -1,6 +1,7 @@
 import express from "express";
 import {
   cancelOrder,
+  getDashboardStatus,
   getOrderDetailsById,
   getOrdersForDashboard,
   updateOrderStatus,
@@ -10,6 +11,7 @@ import {
 const router = express.Router();
 
 router.get("/all", getOrdersForDashboard);
+router.get("/dash/status", getDashboardStatus)
 router.get("/:id", getOrderDetailsById);
 
 router.patch("/:id/status", updateOrderStatus);

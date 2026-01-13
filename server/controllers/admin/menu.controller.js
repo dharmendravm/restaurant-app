@@ -1,29 +1,47 @@
 import cloudinary from "../../config/cloudinary.js";
 import Menu from "../../models/menu.js";
+import AppError from "../../utils/appError.js";
 
 export const createMenu = async (req, res, next) => {
   try {
+    const { name, description, price, category } = req.body;
+
+    if (!name || !price || !category) {
+      return next(new AppError("Name, price and category are required", 400));
+    }
+
     if (!req.file) {
       return next(new AppError("Image is required", 400));
+    }
+
+    const exists = await Menu.findOne({ name });
+    if (exists) {
+      return next(new AppError("Menu item already exists", 409));
     }
 
     const filePath = req.file.path;
 
     // Upload to Cloudinary
-    const result = await cloudinary.uploader.upload(filePath, {
+    const uploadResult = await cloudinary.uploader.upload(req.file.path, {
       folder: "menu",
     });
 
-    // Save to DB
+    if (!uploadResult?.secure_url) {
+      return next(new AppError("Image upload failed", 500));
+    }
+
     const menuItem = await Menu.create({
-      ...req.body,
-      image: result.secure_url,
+      name,
+      description,
+      price,
+      category,
+      image: uploadResult.secure_url,
     });
 
-    return res.status(201).json({
+    res.status(201).json({
       success: true,
+      message: "New menu item added successfully",
       data: menuItem,
-      message: "New menu item added",
     });
   } catch (error) {
     next(error);

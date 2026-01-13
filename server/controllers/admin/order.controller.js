@@ -30,6 +30,58 @@ export const getOrdersForDashboard = async (req, res, next) => {
   }
 };
 
+export const getDashboardStatus = async (req, res, next) => {
+  try {
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const [todayOrders, cancelled, inProgress, revenueResult] =
+      await Promise.all([
+        Order.countDocuments({
+          createdAt: { $gte: startOfDay, $lte: endOfDay },
+        }),
+        Order.countDocuments({
+          orderStatus: "cancelled",
+          createdAt: { $gte: startOfDay, $lte: endOfDay },
+        }),
+        Order.countDocuments({
+          orderStatus: "preparing",
+          createdAt: { $gte: startOfDay, $lte: endOfDay },
+        }),
+        Order.aggregate([
+          {
+            $match: {
+              orderStatus: "served",
+              paymentStatus: "paid",
+              createdAt: { $gte: startOfDay, $lte: endOfDay },
+            },
+          },
+          {
+            $group: {
+              _id: null,
+              totalRevenue: { $sum: "$finalAmount" },
+            },
+          },
+        ]),
+      ]);
+
+    const todayRevenue = revenueResult[0]?.totalRevenue || 0;
+
+    res.status(200).json({
+      success: true,
+      todayOrders,
+      cancelled,
+      inProgress,
+      todayRevenue,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getOrderDetailsById = async (req, res, next) => {
   try {
     const { id } = req.params;

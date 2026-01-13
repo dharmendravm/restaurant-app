@@ -17,6 +17,7 @@
     "clsx": "^2.1.1",
     "daisyui": "^5.5.14",
     "dotenv": "^17.2.3",
+    "firebase": "^12.7.0",
     "framer-motion": "^12.23.26",
     "lucide-react": "^0.555.0",
     "motion": "^12.23.26",

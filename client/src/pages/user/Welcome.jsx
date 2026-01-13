@@ -6,6 +6,8 @@ import { UtensilsCrossed, ChefHat, Leaf, Bell, Clock } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { session as createSession } from "@/store/guestSlice";
 import { useToast } from "@/components/ui/toast";
+import { GoogleLoginUI } from "@/components/buttons/GoogleLoginButton";
+import { GitHubLoginUI } from "@/components/buttons/GithubLoginButton";
 
 const Welcome = () => {
   const dispatch = useDispatch();
@@ -122,11 +124,16 @@ const Welcome = () => {
 
                   <Link
                     to="/register"
-                    className="w-full bg-brand-main hover:opacity-90 text-white font-medium py-3 rounded-xl border border-brand-main/30 flex items-center justify-center gap-2 transition active:scale-95"
+                    className="w-full bg-brand-main hover:opacity-90 text-white font-medium py-2.5 rounded-xl border border-brand-main/30 flex items-center justify-center gap-2 transition active:scale-95"
                   >
                     <UserPlus className="w-5 h-5" />
                     <span className="text-sm">Register Now</span>
                   </Link>
+
+                  <div className="flex flex-col sm:flex-row gap-1.5">
+                    <GoogleLoginUI />
+                    <GitHubLoginUI />
+                  </div>
                 </form>
               </div>
             </div>

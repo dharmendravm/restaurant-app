@@ -1,0 +1,145 @@
+import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
+import User from "../models/user.js";
+import transporter from "../services/emailService.js";
+import registerTemplate from "../services/emailtemplates/registerTemplate.js";
+import { FRONTEND_URL, MAIL_USER } from "../config.js";
+import AppError from "../utils/appError.js";
+import admin from "../config/firebaseAdmin.js";
+
+export const googleLogin = async (req, res, next) => {
+  try {
+    const { idToken } = req.body;
+
+    if (!idToken) {
+      return next(new AppError("ID token missing", 400));
+    }
+
+    const decoded = await admin.auth().verifyIdToken(idToken);
+    const email = decoded.email.toLocaleLowerCase();
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        name: decoded.name,
+        email,
+        avatar: decoded.picture,
+        uid: decoded.uid,
+        authProvider: "GOOGLE",
+        isEmailVerified: decoded.email_verified,
+        lastLogin: new Date(decoded.auth_time * 1000),
+      });
+
+      await transporter.sendMail({
+        from: MAIL_USER,
+        to: user.email,
+        subject: "Welcome to TableOrbit 🎉 | 30% OFF Inside",
+        html: registerTemplate({
+          customerName: user.name,
+          orderLink: FRONTEND_URL,
+        }),
+      });
+    } else {
+      user.lastLogin = new Date();
+      user.isEmailVerified = decoded.email_verified;
+      user.avatar = decoded.picture || user.avatar;
+      user.uid = decoded.uid;
+
+      await user.save();
+    }
+
+    const payload = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
+
+    const accessToken = generateAccessToken(payload);
+    const refreshToken = generateRefreshToken(payload);
+
+    user.refreshToken = refreshToken;
+    user.refreshTokenExpiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    user.lastLogin = new Date();
+
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      data: user,
+      accessToken,
+      refreshToken,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const githubLogin = async (req, res, next) => {
+  try {
+    const { idToken } = req.body;
+
+    if (!idToken) {
+      return next(new AppError("ID token missing", 400));
+    }
+
+    const decoded = await admin.auth().verifyIdToken(idToken);
+    const email = decoded.email.toLocaleLowerCase();
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        name: decoded.name,
+        email,
+        avatar: decoded.picture,
+        uid: decoded.uid,
+        authProvider: "GITHUB",
+        isEmailVerified: decoded.email_verified,
+        lastLogin: new Date(decoded.auth_time * 1000),
+      });
+
+      await transporter.sendMail({
+        from: MAIL_USER,
+        to: user.email,
+        subject: "Welcome to TableOrbit 🎉 | 30% OFF Inside",
+        html: registerTemplate({
+          customerName: user.name,
+          orderLink: FRONTEND_URL,
+        }),
+      });
+    } else {
+      user.lastLogin = new Date();
+      user.avatar = decoded.picture || user.avatar;
+      user.uid = decoded.uid;
+      user.lastLogin = new Date();
+
+      await user.save();
+    }
+
+    const payload = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    };
+
+    const accessToken = generateAccessToken(payload);
+    const refreshToken = generateRefreshToken(payload);
+
+    user.refreshToken = refreshToken;
+    user.refreshTokenExpiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      data: user,
+      accessToken,
+      refreshToken,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

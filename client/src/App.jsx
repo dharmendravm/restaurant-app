@@ -14,6 +14,8 @@ import AuthenticatedLayout from "@/layouts/AuthenticatedLayout";
 import HomePage from "@/pages/user/HomePage";
 import CartPage from "./pages/Cart/CartPage";
 import UserProfile from "./pages/user/UserProfile";
+import OrderSuccess from "./pages/order/OrderSuccessPage";
+import OrderDetails from "./pages/order/OrderDetails";
 
 import ProtectedAdmin from "./routes/ProtectedAdmin";
 import AdminLayout from "./layouts/AdminLayout";
@@ -23,8 +25,9 @@ import TablesPage from "./pages/admin/tables/TablesPage";
 import Users from "./pages/admin/orders/Orders";
 import Checkout from "./pages/order/CheckOutPage";
 import Orders from "./pages/admin/orders/Orders";
-import OrderSuccess from "./pages/order/OrderSuccessPage";
-import OrderDetails from "./pages/order/OrderDetails";
+import OrderDetailsAdmin from "./pages/admin/orders/OrderDetailPage";
+import MenuPage from "./pages/admin/menu/AddNewMenuPage";
+import AddCouponForm from "./pages/admin/coupons/CouponsPage";
 
 function App() {
   return (
@@ -61,7 +64,10 @@ function App() {
               <Route path="/admin" element={<Dashboard />} />
               <Route path="/admin/users" element={<UsersPage />} />
               <Route path="/admin/orders" element={<Orders />} />
+              <Route path="/admin/orders/:id" element={<OrderDetailsAdmin />} />
               <Route path="/admin/tables" element={<TablesPage />} />
+              <Route path="/admin/create/menu" element={<MenuPage />} />
+              <Route path="/admin/create/coupon" element={<AddCouponForm />} />
             </Route>
           </Route>
         </Routes>

@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { User, Mail, Lock, ArrowRight, GiftIcon, UserPlus, LockKeyhole, TabletSmartphone } from "lucide-react";
+import {
+  User,
+  Mail,
+  Lock,
+  ArrowRight,
+  GiftIcon,
+  UserPlus,
+  LockKeyhole,
+  TabletSmartphone,
+} from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,6 +20,7 @@ import AuthInput from "@/components/auth/AuthInput";
 import AuthButton from "@/components/auth/AuthButton";
 import AuthAsideContent from "@/components/ui/AuthAsideContent";
 import { useToast } from "@/components/ui/toast";
+import { GoogleLoginUI } from "@/components/buttons/GoogleLoginButton";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -169,14 +179,17 @@ const Register = () => {
                       </span>
                     </p>
                   </div>
+                  <div className="flex gap-1 flex-col sm:flex-row">
+                    <AuthButton
+                      loading={loading}
+                      loadingText="Creating Account..."
+                    >
+                      <UserPlus className="w-5 h-5" />
+                      Register Now
+                    </AuthButton>
 
-                  <AuthButton
-                    loading={loading}
-                    loadingText="Creating Account..."
-                  >
-                    <UserPlus className="w-5 h-5" />
-                    Register Now
-                  </AuthButton>
+                    <GoogleLoginUI />
+                  </div>
                 </form>
               </div>
 
