@@ -1,11 +1,11 @@
-import { FRONTEND_URL } from "../../config.js";
+const FRONTEND_URL = process.env.FRONTEND_URL;
 
 const registerTemplate = ({
   userName,
   orderLink,
   year = new Date().getFullYear(),
 }) => {
-  const supportEmail = `support@${'TableOrbit'
+  const supportEmail = `support@${"TableOrbit"
     .replace(/\s+/g, "")
     .toLowerCase()}.com`;
 

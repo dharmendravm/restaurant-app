@@ -2,7 +2,6 @@ import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
 import User from "../models/user.js";
 import transporter from "../services/emailService.js";
 import registerTemplate from "../services/emailtemplates/registerTemplate.js";
-import { FRONTEND_URL, MAIL_USER } from "../config.js";
 import AppError from "../utils/appError.js";
 import admin from "../config/firebaseAdmin.js";
 
@@ -31,12 +30,12 @@ export const googleLogin = async (req, res, next) => {
       });
 
       await transporter.sendMail({
-        from: MAIL_USER,
+        from: process.env.MAIL_USER,
         to: user.email,
         subject: "Welcome to TableOrbit 🎉 | 30% OFF Inside",
         html: registerTemplate({
           customerName: user.name,
-          orderLink: FRONTEND_URL,
+          orderLink: process.env.FRONTEND_URL,
         }),
       });
     } else {
@@ -101,12 +100,12 @@ export const githubLogin = async (req, res, next) => {
       });
 
       await transporter.sendMail({
-        from: MAIL_USER,
+        from: process.env.MAIL_USER,
         to: user.email,
         subject: "Welcome to TableOrbit 🎉 | 30% OFF Inside",
         html: registerTemplate({
           customerName: user.name,
-          orderLink: FRONTEND_URL,
+          orderLink: process.env.FRONTEND_URL,
         }),
       });
     } else {
