@@ -1,6 +1,6 @@
 import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
 import User from "../models/user.js";
-import transporter from "../services/emailService.js";
+import transporter from "../services/email.service.js";
 import registerTemplate from "../services/emailtemplates/registerTemplate.js";
 import AppError from "../utils/appError.js";
 import admin from "../config/firebaseAdmin.js";
