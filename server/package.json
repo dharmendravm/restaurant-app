@@ -2,11 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "set DEBUG=server:testing && node test.js",
-    "server": "set DEBUG=server:* && nodemon app.js",
-    "start": "node app.js"
+    "server": "set DEBUG=server:* && nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",

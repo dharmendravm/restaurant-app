@@ -33,7 +33,4 @@ app.use("/api/v1", apiRoutes);
 app.use(notFound);
 app.use(globalErrorHandler);
 
-const port = process.env.PORT || 4000;
-app.listen(port, "0.0.0.0", () => {
-  console.log(`Server is Running on Port: ${port}"`);
-});
+export default app;
