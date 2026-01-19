@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { ACCESS_TOKEN_SECRET } from "../config.js";
 import User from "../models/user.js";
 
 const checkGuestOrUser = async (req, _res, next) => {
@@ -14,7 +13,7 @@ const checkGuestOrUser = async (req, _res, next) => {
 
     let decoded;
     try {
-      decoded = jwt.verify(token, ACCESS_TOKEN_SECRET);
+      decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     } catch {
       return next();
     }

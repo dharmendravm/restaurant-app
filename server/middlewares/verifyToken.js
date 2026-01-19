@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
-import { ACCESS_TOKEN_SECRET } from "../config.js";
 import dotenv from 'dotenv';
 import AppError from '../utils/appError.js'
 dotenv.config();
@@ -16,7 +15,7 @@ export const verifyToken = async (req, _res, next) => {
 
     const token = authHeader.split(" ")[1];
     // Verify Access Token
-    const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET || process.env.ACCESS_TOKEN_SECRET);
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
     // Fetch user from DB
     const user = await User.findById(decoded.id).select("-password -refreshToken");

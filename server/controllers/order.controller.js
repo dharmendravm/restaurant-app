@@ -1,13 +1,11 @@
 import Cart from "../models/cart.js";
 import Coupon from "../models/coupon.js";
-import User from "../models/user.js";
 import Order from "../models/order.js";
 import Table from "../models/table.js";
 import AppError from "../utils/appError.js";
 import { calculateCouponForCart } from "../utils/couponCalculator.js";
 import razorpay from "../config/razorpay.js";
 import { postOrderCleanUP } from "../utils/orderHelpers.js";
-import { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET } from "../config.js";
 import mongoose from "mongoose";
 
 const generateOrderNumber = (tableNumber) => {
@@ -170,7 +168,7 @@ export const createOrder = async (req, res, next) => {
 
     return res.status(201).json({
       order,
-      razorpayOrder: { ...razorpayOrder, key: RAZORPAY_KEY_ID },
+      razorpayOrder: { ...razorpayOrder, key: process.env.RAZORPAY_KEY_ID },
       message: "Payment initiated successfully",
     });
   } catch (error) {
@@ -190,7 +188,7 @@ export const veryfyPayment = async (req, res, next) => {
     }
 
     const generated_signature = crypto
-      .createHmac("sha256", RAZORPAY_KEY_SECRET)
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(razorpay_order_id + "|" + razorpay_payment_id)
       .digest("hex");
 

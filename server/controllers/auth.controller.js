@@ -4,9 +4,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import transporter from "../services/emailService.js";
 import registerTemplate from "../services/emailtemplates/registerTemplate.js";
-import { FRONTEND_URL, MAIL_USER, REFRESH_TOKEN_SECRET } from "../config.js";
 import AppError from "../utils/appError.js";
-import admin from "../config/firebaseAdmin.js";
 
 // Register new user
 export const register = async (req, res, next) => {
@@ -43,12 +41,12 @@ export const register = async (req, res, next) => {
     delete userResponse.password;
 
     await transporter.sendMail({
-      from: MAIL_USER,
+      from: process.env.MAIL_USER,
       to: newUser.email,
       subject: "Welcome to TableOrbit 🎉 | 30% OFF Inside",
       html: registerTemplate({
         customerName: newUser.name,
-        orderLink: "https//",
+        orderLink: process.env.FRONTEND_URL,
       }),
     });
 
@@ -129,7 +127,7 @@ export const refresh = async (req, res, next) => {
 
     let decoded;
     try {
-      decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
+      decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
     } catch {
       return next(new AppError("Invalid or expired refresh token", 401));
     }

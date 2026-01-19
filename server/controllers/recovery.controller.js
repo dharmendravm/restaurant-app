@@ -1,4 +1,3 @@
-import { FRONTEND_URL, MAIL_USER } from "../config.js";
 import User from "../models/user.js";
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
@@ -33,10 +32,10 @@ export const forgotPassword = async (req, res, next) => {
 
     await user.save();
 
-    const resetLink = `${FRONTEND_URL}/reset-password/${resetToken}`;
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
     await transporter.sendMail({
-      from: MAIL_USER,
+      from: process.env.MAIL_USER,
       to: user.email,
       subject: "Reset Your Password",
       html: resetPasswordTemplate({
