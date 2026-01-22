@@ -1,11 +1,9 @@
-import {
-  getAllTables,
-  toggleTableStatus,
-} from "@/store/admin/tableSlice";
-import React, { useEffect, useState } from "react";
+import { getAllTables, toggleTableStatus } from "@/store/admin/tableSlice";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TableSkeleton from "@/components/skeletons/TableSkeleton";
 import { Download } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const TablesPage = () => {
   const dispatch = useDispatch();
@@ -26,6 +24,14 @@ const TablesPage = () => {
 
   return (
     <>
+      <div className="flex justify-end mt-1 mb-3">
+        <Link
+          to="/admin/tables/create"
+          className="btn text-black bg-btn-black rounded-xl w-40"
+        >
+          Add Table
+        </Link>
+      </div>
       <div className="overflow-x-auto rounded-box border border-border bg-app-bg text-text-muted">
         <div className="hidden md:block overflow-x-auto rounded-box border border-border bg-app-bg">
           <table className="table text-text-main">
@@ -131,10 +137,6 @@ const TablesPage = () => {
             </a>
           </div>
         ))}
-      </div>
-
-      <div className="flex justify-end mt-2">
-        <button className="btn text-text-main bg-card-bg">Add More</button>
       </div>
     </>
   );

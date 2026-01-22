@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import QRCode from "qrcode";
-import os from "os";
 import Table from "../../models/table.js";
+import AppError from '../../utils/appError.js'
 
 //  REGISTER TABLE
 export const registerTable = async (req, res, next) => {
@@ -15,20 +15,10 @@ export const registerTable = async (req, res, next) => {
     // Generate unique QR slug
     const qrSlug = crypto.randomBytes(6).toString("hex");
     // Generate QR scan URL based on local network IP if available
-    const nets = os.networkInterfaces();
-    let ipAddress = "localhost";
 
-    for (const name of Object.keys(nets)) {
-      for (const iface of nets[name] || []) {
-        if (iface.family === "IPv4" && !iface.internal) {
-          ipAddress = iface.address;
-          break;
-        }
-      }
-      if (ipAddress !== "localhost") break;
-    }
-
-    const qrCodeURL = `http://${ipAddress}:5173/welcome?qr=${qrSlug}`;
+    
+    const FRONTEND_URL = process.env.FRONTEND_URL;
+    const qrCodeURL = `${FRONTEND_URL}/welcome?qr=${qrSlug}`;
     const qrImage = await QRCode.toDataURL(qrCodeURL);
 
     // Save in DB

@@ -1,7 +1,6 @@
 import AuthError from "@/components/auth/AuthError";
 import api from "@/lib/api";
 import React, { useEffect, useState } from "react";
-import { is } from "zod/v4/locales";
 
 const CouponsDashboard = () => {
   const [pageLoading, setPageLoading] = useState(false);

@@ -1,7 +1,7 @@
 import express from "express";
 
 import authRoutes from "./auth.route.js";
-import ouathRoutes from '../router/oauth.route.js'
+import oauthRoutes from "../router/oauth.route.js";
 import userRoute from "./user.route.js";
 import sessionRoute from "./session.route.js";
 import tableRoute from "./table.route.js";
@@ -22,7 +22,7 @@ const router = express.Router();
 
 // MAIN ROUTES
 router.use("/auth", authRoutes);
-router.use("/oauth", ouathRoutes)
+router.use("/oauth", oauthRoutes);
 
 router.use("/session", sessionRoute);
 router.use("/tables", tableRoute);
@@ -33,12 +33,11 @@ router.use("/cart", cartRoute);
 router.use("/coupons", couponRoute);
 
 // ADMIN
-router.use(verifyToken);
-router.use(checkRole(["admin"]));
+router.use("/admin", verifyToken, checkRole(["admin"]));
 
-router.use("/users", adminUserRoutes);
-router.use("/coupons", adminCouponRoutes);
-router.use("/orders", adminOrderRoute);
-router.use("/menu", adminMenuRoutes);
-router.use("/tables", adminTableRoutes);
+router.use("/admin/users", adminUserRoutes);
+router.use("/admin/coupons", adminCouponRoutes);
+router.use("/admin/orders", adminOrderRoute);
+router.use("/admin/menu", adminMenuRoutes);
+router.use("/admin/tables", adminTableRoutes);
 export default router;
