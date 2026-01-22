@@ -24,28 +24,35 @@ export const updateUser = async (req, res, next) => {
   try {
     const { name, phone } = req.body;
 
-    const updatedData = {
-      name,
-      phone,
-    };
+    const existingUser = await User.findById(req.user.id);
 
-    // email
-    // if (email) {
-    //   updatedData.email = email.toLowerCase();
-    // }
+    if (!existingUser) {
+      return next(new AppError("User not found", 404));
+    }
+
+    if (name !== undefined && (name.trim() === "" || name.trim().length < 3)) {
+      return next(new AppError("Name must be at least 3 characters", 400));
+    }
+
+    const isNameSame = name === undefined || name === existingUser.name;
+    const isPhoneSame = phone === undefined || phone === existingUser.phone;
+
+    if (isNameSame && isPhoneSame) {
+      return res.status(200).json({
+        success: true,
+        message: "No changes detected",
+        data: existingUser,
+      });
+    }
+
+    const updatedData = {};
+    if (name !== undefined) updatedData.name = name;
+    if (phone !== undefined) updatedData.phone = phone;
 
     const user = await User.findByIdAndUpdate(req.user.id, updatedData, {
       new: true,
       runValidators: true,
     }).select("-password -refreshToken");
-
-    if (!user) {
-      return next(new AppError("User not found", 404));
-    }
-
-    if (name === user.name || phone === user.phone) {
-      return next(new AppError("No changes detected", 200));
-    }
 
     res.status(200).json({
       success: true,
@@ -100,7 +107,7 @@ export const deactivateUser = async (req, res, next) => {
       req.params.id,
       { isActive: false },
       { new: true },
-    ).select("-password -refreshToken");
+    ).select("-refreshToken");
 
     if (!user) {
       return next(new AppError("User not found", 404));

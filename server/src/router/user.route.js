@@ -15,6 +15,6 @@ router.get("/get", getUserByToken);
 router.post("/change-password", changePassword);
 router.patch("/update-user", updateUser);
 router.patch("/diactivate-account", deactivateUser);
-router.put("/update-profile", updateUser)
+router.patch("/update-profile", updateUser)
 
 export default router;
