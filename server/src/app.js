@@ -8,14 +8,22 @@ import { globalErrorHandler, notFound } from "./middlewares/errormiddleware.js";
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://restaurant-app-gold-three.vercel.app",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5174",
-      "https://restaurant-app-gold-three.vercel.app",
-    ],
-
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true); // Postman / server calls
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
+    credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "x-session-token"],
   }),
