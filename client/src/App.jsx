@@ -30,6 +30,7 @@ import MenuPage from "./pages/admin/menu/AddNewMenuPage";
 import AddCouponForm from "./pages/admin/coupons/CouponsPage";
 
 import io from "socket.io-client";
+import RegisterTable from "./pages/admin/tables/CreateTablePage";
 
 function App() {
   // const socket = io("http://localhost:3000");
@@ -73,6 +74,7 @@ function App() {
               <Route path="/admin/orders" element={<Orders />} />
               <Route path="/admin/orders/:id" element={<OrderDetailsAdmin />} />
               <Route path="/admin/tables" element={<TablesPage />} />
+              <Route path="/admin/tables/create" element={<RegisterTable />} />
               <Route path="/admin/create/menu" element={<MenuPage />} />
               <Route path="/admin/create/coupon" element={<AddCouponForm />} />
             </Route>
