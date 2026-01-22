@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "set DEBUG=server:testing && node test.js",
-    "server": "set DEBUG=server:* && nodemon server.js",
+    "dev": "nodemon server.js",
     "start": "node server.js"
   },
   "keywords": [],
