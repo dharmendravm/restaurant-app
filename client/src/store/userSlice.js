@@ -28,7 +28,7 @@ export const updateProfileThunk = createAsyncThunk(
   "user/updateProfile",
   async ({ name, phone }, thunkApi) => {
     try {
-      const res = await api.put("/user/update-profile", {
+      const res = await api.patch("/user/update-profile", {
         name,
         phone,
       });
@@ -75,8 +75,7 @@ const userSlice = createSlice({
         state.error = action.payload || "Something went wrong";
       });
 
-
-      builder
+    builder
       .addCase(updateProfileThunk.pending, (state) => {
         state.updateLoading = true;
         state.error = null;
