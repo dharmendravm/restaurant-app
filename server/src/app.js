@@ -29,7 +29,7 @@ app.use(
   }),
 );
 
-app.options("*", cors());
+// app.options("(.*)", cors());
 app.use(express.json());
 
 ConnectDB();
