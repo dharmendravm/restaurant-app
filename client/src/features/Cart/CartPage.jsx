@@ -8,7 +8,7 @@ import {
   getCartThunk,
   increaseQtyCartThunk,
   removeItemCartThunk,
-} from "@/features/Cart/cartSlice";
+} from "@/store/cartSlice";
 import CartSkeleton from "../../components/shared/skeletons/CartSkeleton";
 
 const CartPage = () => {

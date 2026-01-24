@@ -3,6 +3,7 @@ import {
 //   cancelOrder,
   createOrder,
   getOrderById,
+  verifyPayment,
 } from "../controllers/order.controller.js";
 import checkGuestOrUser from "../middlewares/checkGuestOrUser.js";
 
@@ -10,6 +11,7 @@ const router = express.Router();
 router.use(checkGuestOrUser);
 router.post("/place", createOrder);
 router.get("/:orderId", getOrderById);
+router.post("/verify-payment", verifyPayment)
 
 // router.patch("/:orderId/cancel", cancelOrder);
 

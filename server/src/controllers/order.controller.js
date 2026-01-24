@@ -2,11 +2,11 @@ import Cart from "../models/cart.js";
 import Coupon from "../models/coupon.js";
 import Order from "../models/order.js";
 import Table from "../models/table.js";
+import crypto from "crypto";
 import AppError from "../utils/appError.js";
 import { calculateCouponForCart } from "../utils/couponCalculator.js";
 import razorpay from "../services/integrations/razorpay.service.js";
 import { postOrderCleanUP } from "../utils/orderHelpers.js";
-import mongoose from "mongoose";
 
 const generateOrderNumber = (tableNumber) => {
   const now = new Date();
@@ -45,7 +45,7 @@ export const createOrder = async (req, res, next) => {
     }
 
     const cart = await Cart.findOne({ userId, sessionToken }).populate(
-      "items.menuItemId"
+      "items.menuItemId",
     );
 
     if (!cart || cart.items.length === 0) {
@@ -176,30 +176,44 @@ export const createOrder = async (req, res, next) => {
   }
 };
 
-export const veryfyPayment = async (req, res, next) => {
+
+export const verifyPayment = async (req, res, next) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
       req.body;
 
-    const order = Order.findOne({ razorpay_order_id });
-
-    if (!order) {
-      return next(new AppError("Order not found", 404));
-    }
-
+    // 1. Verify Signature
     const generated_signature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(razorpay_order_id + "|" + razorpay_payment_id)
       .digest("hex");
 
     if (generated_signature !== razorpay_signature) {
-      res
-        .status(400)
-        .json({ success: false, message: "Payment verification failed!" });
+      return res.status(400).json({
+        success: false,
+        message: "Payment verification failed!",
+      });
     }
 
-    const payment = await razorpay.payments.fetch(razorpay_payment_id);
-    console.log(payment);
+    // 2. Find and update the order in your database
+    const order = await Order.findOneAndUpdate(
+      { razorpay_order_id },
+      {
+        paymentStatus: "paid",
+        razorpay_payment_id: razorpay_payment_id,
+      },
+      { new: true },
+    );
+
+    if (!order) {
+      return next(new AppError("Order not found", 404));
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Payment verified successfully",
+      orderId: order._id,
+    });
   } catch (error) {
     next(error);
   }
