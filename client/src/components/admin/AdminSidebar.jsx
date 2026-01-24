@@ -17,7 +17,6 @@ const menu = [
   { name: "Coupon", to: "/admin/create/coupon", icon: TicketPercent },
   { name: "Tables", to: "/admin/tables", icon: Table },
   { name: "Users", to: "/admin/users", icon: Users },
-  { name: "Settings", to: "/admin/settings", icon: Settings },
 ];
 
 const AdminSidebar = ({ open, onClose }) => {

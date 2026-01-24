@@ -19,14 +19,14 @@ const OrderSuccess = lazy(() => import("@/pages/order/OrderSuccessPage"));
 const OrderDetails = lazy(() => import("@/pages/order/OrderDetails"));
 
 // Admin
-const Dashboard = lazy(() => import("@/pages/admin/dashboard/Dashboard"));
-const UsersPage = lazy(() => import("@/pages/admin/users/UserPage"));
-const TablesPage = lazy(() => import("@/pages/admin/tables/TablesPage"));
-const RegisterTable = lazy(() => import("@/pages/admin/tables/CreateTablePage"));
+const Dashboard = lazy(() => import("@/pages/admin-dashboard/Dashboard"));
+const UsersPage = lazy(() => import("@/features/admin-users/UserPage"));
+const TablesPage = lazy(() => import("@/features/admin-tables/TablesPage"));
+const RegisterTable = lazy(() => import("@/features/admin-tables/CreateTablePage"));
 const OrdersAdmin = lazy(() => import("@/features/admin-orders/Orders"));
 const OrderDetailsAdmin = lazy(() => import("@/features/admin-orders/OrderDetailPage"));
-const MenuPage = lazy(() => import("@/pages/admin/menu/AddNewMenuPage"));
-const AddCouponForm = lazy(() => import("@/pages/admin/coupons/CouponsPage"));
+const MenuPage = lazy(() => import("@/features/admin-menu/AddNewMenuPage"));
+const AddCouponForm = lazy(() => import("@/features/admin-coupons/CouponsPage"));
 
 
 export const routesConfig = {

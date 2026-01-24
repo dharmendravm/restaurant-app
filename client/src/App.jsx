@@ -7,8 +7,8 @@ import PageSkeleton from "./components/shared/skeletons/PageSkeleton";
 const NotFound = lazy(() => import('@/components/ui/NotFound'))
 import ProtectedRoutes from "@/routes/ProtectedRoutes";
 import ProtectedAdmin from "./routes/ProtectedAdmin";
-import AuthenticatedLayout from "@/layouts/AuthenticatedLayout";
-import AdminLayout from "./layouts/AdminLayout";
+import AuthenticatedLayout from "@/components/layouts/AuthenticatedLayout";
+import AdminLayout from "./components/layouts/AdminLayout";
 import ForceDarkPages from "./routes/ForceDarkPages";
 
 // Simple Loading Component

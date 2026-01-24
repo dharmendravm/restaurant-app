@@ -5,7 +5,7 @@ import { ArrowRight, ChevronRight } from "lucide-react";
 import {
   getOrderForDashBoard,
   getOrderStatusForDashBoard,
-} from "@/features/admin-orders/adminOrderSlice";
+} from "@/store/admin/adminOrderSlice";
 import { Link } from "react-router-dom";
 
 const StatusDot = ({ status }) => {

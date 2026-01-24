@@ -1,5 +1,4 @@
 import api from "@/lib/api";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -85,7 +84,7 @@ const Checkout = () => {
           ...form,
           couponCode: selectedCoupon?.couponCode ?? null,
         },
-        { headers }
+        { headers },
       );
       return res.data;
     } catch (error) {
@@ -109,7 +108,7 @@ const Checkout = () => {
         customerPhone: user.phone ?? "",
       }));
     }
-  }, []);
+  }, [user]);
 
   return (
     <div className="min-h-screen bg-app-bg flex items-center justify-center px-4">
