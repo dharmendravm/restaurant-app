@@ -107,20 +107,8 @@ const OrderSuccess = () => {
         <div className="flex justify-center items-center">
           {" "}
           <Link
-            to={`/orders/${order._id}`}
-            className="
-    inline-flex items-center justify-center
-    mt-6
-    px-6 py-3
-    rounded-xl
-    font-semibold text-sm
-    bg-btn-black text-app-bg
-    shadow-lg shadow-muted-bg/10
-    transition-all duration-300 ease-out
-    hover:-translate-y-0.5 hover:shadow-xl hover:shadow-muted-bg/20
-    active:translate-y-0 active:shadow-md
-    focus:outline-none focus-visible:ring-2 focus-visible:ring-muted-bg/10
-  "
+            to={`/orders/${orderId}`}
+            className="inline-flex items-center justify-center mt-6 px-6 py-3 rounded-xl font-semibold text-sm bg-btn-black text-app-bg shadow-lg shadow-muted-bg/10 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-xl hover:shadow-muted-bg/20 active:translate-y-0 active:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-muted-bg/10 "
           >
             View full order →
           </Link>
