@@ -25,7 +25,7 @@ export const getOrderById = createAsyncThunk(
       const headers = getOptionalAuthHeaders(thunkApi);
 
       const res = await api.get(`/orders/${orderId}`, { headers });
-      return res.data;
+      return res.data.order;
     } catch (error) {
       return thunkApi.rejectWithValue(
         error.response?.data?.message || "Failed to fetch order"

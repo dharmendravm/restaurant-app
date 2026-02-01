@@ -99,7 +99,11 @@ const orderSchema = new mongoose.Schema(
       enum: ["pending", "preparing", "ready", "served", "cancelled"],
       default: "pending",
     },
-    
+    razorpayOrderId: {
+      type: String,
+      index: true,
+    },
+
     cancelReason: String,
 
     refundAmount: Number,
@@ -109,7 +113,7 @@ const orderSchema = new mongoose.Schema(
     razorpay_order_id: String,
     razorpay_signature: String,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Order = mongoose.model("Order", orderSchema);

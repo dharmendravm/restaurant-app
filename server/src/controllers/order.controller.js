@@ -44,9 +44,12 @@ export const createOrder = async (req, res, next) => {
       return next(new AppError("Unauthorized", 401));
     }
 
-    const cart = await Cart.findOne({ userId, sessionToken }).populate(
-      "items.menuItemId",
-    );
+    const cart = await Cart.findOne({
+      $or: [
+        userId ? { userId } : null,
+        sessionToken ? { sessionToken } : null,
+      ].filter(Boolean),
+    }).populate("items.menuItemId");
 
     if (!cart || cart.items.length === 0) {
       return next(new AppError("Cart is empty", 400));
@@ -159,7 +162,7 @@ export const createOrder = async (req, res, next) => {
 
     const razorpayOrder = await razorpay.orders.create(options);
 
-    orderPayload.razorPayOrderId = razorpayOrder.id;
+    orderPayload.razorpayOrderId = razorpayOrder.id;
 
     const order = await Order.create({
       ...orderPayload,
@@ -175,7 +178,6 @@ export const createOrder = async (req, res, next) => {
     next(error);
   }
 };
-
 
 export const verifyPayment = async (req, res, next) => {
   try {
@@ -197,7 +199,7 @@ export const verifyPayment = async (req, res, next) => {
 
     // 2. Find and update the order in your database
     const order = await Order.findOneAndUpdate(
-      { razorpay_order_id },
+      { razorpayOrderId: razorpay_order_id },
       {
         paymentStatus: "paid",
         razorpay_payment_id: razorpay_payment_id,
@@ -283,3 +285,4 @@ export const getOrderById = async (req, res, next) => {
 //     next(error);
 //   }
 // };
+////

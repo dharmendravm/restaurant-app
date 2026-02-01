@@ -267,7 +267,7 @@ const Navbar = () => {
 
             {displayRole === "admin" && (
               <Link
-                to="/admin/menu"
+                to="/admin"
                 onClick={() => setIsMobileOpen(false)}
                 className="flex items-center gap-2 rounded-full px-3 py-1.5 bg-app-bg text-text-main"
               >
@@ -301,7 +301,7 @@ const Navbar = () => {
 
 export default Navbar;
 
-const MenuItem = ({ icon: Icon, label, to, active }) => {
+const MenuItem = ({ label, to, active }) => {
   const base = "flex items-center gap-3 px-4 py-2 text-sm transition";
 
   const activeStyle = "bg-hover text-text-main relative";
